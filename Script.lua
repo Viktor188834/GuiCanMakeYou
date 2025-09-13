@@ -87,6 +87,9 @@ gui.Delete.TextScaled = true
 
 gui.Delete.MouseButton1Click:Connect(function()
 	gui.gui:Destroy()
+	if sound ~= nil then
+		sound:Destroy()
+	end
 end)
 
 UiCorner(gui.Delete, 5)
