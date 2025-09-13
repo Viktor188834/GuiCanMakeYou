@@ -1,6 +1,5 @@
 local uis = game:GetService("UserInputService")
 local Enabled = true
-local Speeeed = 35
 local plr = game.Players.LocalPlayer
 local mouse = plr:GetMouse()
 
@@ -291,22 +290,3 @@ uis.InputBegan:Connect(function(i, g)
 		end
 	end
 end)
-
---[[AddClickButton("Teleport", function()
-	print("LLLLLLolololol")
-end, "You are loser")]]
-
---[[AddTextBox("Speed", function(text)
-	Speeeed = tonumber(text)
-end, "Change Your Speed to Entered Number")]]
-
---[[AddSlideButton("PrintLol", function()
-	print("On")
-end, function()
-	print("Off")
-end, "Test")]]
-
---character - персонаж, тоесть твой персонаж
---например телепортация: character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0)
---например изменение скорости: character.Humanoid.WalkSpeed = 100
---и есть телепортация выше себя на 100 студов: character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
