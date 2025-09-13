@@ -11,6 +11,7 @@ local gui = {
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
 	TextV1 = Instance.new("TextBox"),
+	Delete = Instance.new("TextButton")
 }
 
 local function UiCorner(parent, Size)
@@ -73,6 +74,22 @@ gui.ScrollingFrame1.Parent = gui.Framev1
 gui.ScrollingFrame1.Size = UDim2.new(1, 0, 3, 0)
 gui.ScrollingFrame1.Position = UDim2.new(0, 0, 0.5, 0)
 gui.ScrollingFrame1.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
+
+gui.Delete.Parent = gui.Framev1
+gui.Delete.Size = UDim2.new(0.15, 0, 0.4, 0)
+gui.Delete.Position = UDim2.new(0.825, 0, 0.05, 0)
+gui.Delete.BorderSizePixel = 0
+gui.Delete.BackgroundColor3 = Color3.fromRGB(220, 20, 60)
+gui.Delete.TextColor3 = Color3.fromRGB(210, 210, 210)
+gui.Delete.Text = "X"
+gui.Delete.TextWrapped = true
+gui.Delete.TextScaled = true
+
+gui.Delete.MouseButton1Click:Connect(function()
+	gui.gui:Destroy()
+end)
+
+UiCorner(gui.Delete, 5)
 
 function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 	local button = Instance.new("TextButton")
@@ -290,3 +307,15 @@ uis.InputBegan:Connect(function(i, g)
 		end
 	end
 end)
+
+Guis:AddSection("--Teleportings--")
+
+Guis:AddClickButton("Teleport To Blue", function()
+	local TargetCFrame = CFrame.new(-64.9400177, 16.5409355, 382.854309, -0.999279559, 3.36041381e-08, -0.03795195, 3.78614509e-08, 1, -1.11457602e-07, 0.03795195, -1.1281422e-07, -0.999279559)
+	character.HumanoidRootPart.CFrame = TargetCFrame
+end, "Teleporting To Blue Base")
+
+Guis:AddClickButton("Teleport To Red", function()
+	local TargetCFrame = CFrame.new(-65.2626877, 15.6462641, 617.80481, 0.999791503, -2.93967144e-08, -0.0204199739, 2.782099e-08, 1, -7.74498901e-08, 0.0204199739, 7.68656392e-08, 0.999791503)
+	character.HumanoidRootPart.CFrame = TargetCFrame
+end, "Teleporting To Red Base")
