@@ -307,15 +307,3 @@ uis.InputBegan:Connect(function(i, g)
 		end
 	end
 end)
-
-Guis:AddSection("--Teleportings--")
-
-Guis:AddClickButton("Teleport To Blue", function()
-	local TargetCFrame = CFrame.new(-64.9400177, 16.5409355, 382.854309, -0.999279559, 3.36041381e-08, -0.03795195, 3.78614509e-08, 1, -1.11457602e-07, 0.03795195, -1.1281422e-07, -0.999279559)
-	character.HumanoidRootPart.CFrame = TargetCFrame
-end, "Teleporting To Blue Base")
-
-Guis:AddClickButton("Teleport To Red", function()
-	local TargetCFrame = CFrame.new(-65.2626877, 15.6462641, 617.80481, 0.999791503, -2.93967144e-08, -0.0204199739, 2.782099e-08, 1, -7.74498901e-08, 0.0204199739, 7.68656392e-08, 0.999791503)
-	character.HumanoidRootPart.CFrame = TargetCFrame
-end, "Teleporting To Red Base")
