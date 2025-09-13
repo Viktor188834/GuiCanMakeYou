@@ -21,8 +21,8 @@ end, "MouseText(Необезательно)")]]
 --например изменение скорости: character.Humanoid.WalkSpeed = 100
 --и есть телепортация выше себя на 100 студов: character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
 
-AddSection("--Teleportings--")
+--AddSection("--Teleportings--")
 
-AddClickButton("Teleport Up You 100 Studs", function()
+--[[AddClickButton("Teleport Up You 100 Studs", function()
 	character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
-end, "Teleport Up Your'e character 100 Studs")
+end, "Teleport Up Your'e character 100 Studs")]]
