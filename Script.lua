@@ -4,6 +4,8 @@ local Speeeed = 35
 local plr = game.Players.LocalPlayer
 local mouse = plr:GetMouse()
 
+local Guis = {}
+
 local gui = {
 	gui = Instance.new("ScreenGui"),
 	Framev1 = Instance.new("Frame"),
@@ -73,7 +75,7 @@ gui.ScrollingFrame1.Size = UDim2.new(1, 0, 3, 0)
 gui.ScrollingFrame1.Position = UDim2.new(0, 0, 0.5, 0)
 gui.ScrollingFrame1.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
 
-local function AddClickButton(Text, fun, TextOnMouseEnter)
+function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 	local button = Instance.new("TextButton")
 	button.Text = Text
 	button.Name = Text
@@ -127,7 +129,7 @@ local function AddClickButton(Text, fun, TextOnMouseEnter)
 	-->>
 end
 
-local function AddTextBox(Text, funWithText, TextOnMouseEnter)
+function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 	local button = Instance.new("TextBox")
 	button.Text = Text
 	button.Name = Text
@@ -178,7 +180,7 @@ local function AddTextBox(Text, funWithText, TextOnMouseEnter)
 	-->>
 end
 
-local function AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
+function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	local button = Instance.new("TextButton")
 	button.Text = ""
 	button.Name = Text
@@ -254,7 +256,7 @@ local function AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	-->>
 end
 
-local function AddSection(Text)
+function Guis:AddSection(Text)
 	local TextLabel = Instance.new("TextLabel")
 	TextLabel.Parent = gui.ScrollingFrame1
 	TextLabel.BorderSizePixel = 0
@@ -308,3 +310,5 @@ end, "Test")]]
 --например телепортация: character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0)
 --например изменение скорости: character.Humanoid.WalkSpeed = 100
 --и есть телепортация выше себя на 100 студов: character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
+
+return Guis
