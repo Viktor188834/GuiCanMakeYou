@@ -109,6 +109,7 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 	button.Parent = gui.ScrollingFrame1
 	button.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
 	button.TextColor3 = Color3.fromRGB(239, 239, 239)
+	button.RichText = true
 	button.TextWrapped = true
 	button.TextScaled = true
 	button.Size = UDim2.new(1, 0, 1, 0)
@@ -167,6 +168,7 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 	button.TextColor3 = Color3.fromRGB(239, 239, 239)
 	button.TextWrapped = true
 	button.TextScaled = true
+	button.RichText = true
 	UiCorner(button, 3)
 	-- functions<<
 	button.Focused:Connect(function()
@@ -218,6 +220,7 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	button.Parent = gui.ScrollingFrame1
 	button.BackgroundColor3 = Color3.fromRGB(165, 0, 0)
 	button.TextColor3 = Color3.fromRGB(239, 239, 239)
+	button.RichText = true
 	button.TextWrapped = true
 	button.TextScaled = true
 	button.AutoButtonColor = false
@@ -298,6 +301,7 @@ function Guis:AddSection(Text)
 	TextLabel.Text = Text
 	TextLabel.TextScaled = true
 	TextLabel.TextWrapped = true
+	TextLabel.RichText = true
 end
 
 local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
