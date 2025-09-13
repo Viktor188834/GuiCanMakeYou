@@ -73,39 +73,6 @@ gui.ScrollingFrame1.Size = UDim2.new(1, 0, 3, 0)
 gui.ScrollingFrame1.Position = UDim2.new(0, 0, 0.5, 0)
 gui.ScrollingFrame1.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
 
-
-uis.InputBegan:Connect(function(i, g)
-	if g then return end
-	if i.KeyCode == Enum.KeyCode.Five then
-		if Enabled == false then return end
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.BlueCamPartCloser.CFrame
-	end
-end)
-
-uis.InputBegan:Connect(function(i, g)
-	if g then return end
-	if i.KeyCode == Enum.KeyCode.Six then
-		if Enabled == false then return end
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.RedCamPartCloser.CFrame
-	end
-end)
-
-uis.InputBegan:Connect(function(i, g)
-	if g then return end
-	if i.KeyCode == Enum.KeyCode.Zero then
-		Enabled = false
-	end
-end)
-
-plr.CharacterAdded:Connect(function(character)
-	if Enabled == false then return end
-	local Humanoid = character:WaitForChild("Humanoid")
-	repeat
-		Humanoid.WalkSpeed = Speeeed
-		wait(0.1)
-	until Humanoid.Health <= 0
-end)
-
 local function AddClickButton(Text, fun, TextOnMouseEnter)
 	local button = Instance.new("TextButton")
 	button.Text = Text
