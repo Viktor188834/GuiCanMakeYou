@@ -1,6 +1,7 @@
-Библиотека: loadstring(game:HttpGet("https://raw.githubusercontent.com/Viktor188834/GuiCanMakeYou/refs/heads/main/Script.lua"))()
+--Библиотека: 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Viktor188834/GuiCanMakeYou/refs/heads/main/Script.lua"))()
 
-после этой строки которая библиотека, 
+--после этой строки которая библиотека,
 
 --[[AddClickButton("Text", function()
 	print("LLLLLLolololol")
@@ -16,9 +17,9 @@ end, function()
 	print("Off")
 end, "MouseText(Необезательно)")]]
 
---character - персонаж, тоесть твой персонаж
---например телепортация: character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0)
---например изменение скорости: character.Humanoid.WalkSpeed = 100
+--character - персонаж, тоесть твой персонаж --например телепортация: 
+--character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0)
+--например изменение скорости: character.Humanoid.WalkSpeed = 100 
 --и есть телепортация выше себя на 100 студов: character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
 
 --AddSection("--Teleportings--")
