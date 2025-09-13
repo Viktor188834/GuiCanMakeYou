@@ -310,5 +310,3 @@ end, "Test")]]
 --например телепортация: character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0)
 --например изменение скорости: character.Humanoid.WalkSpeed = 100
 --и есть телепортация выше себя на 100 студов: character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame * CFrame.new(0, 100, 0)
-
-return Guis
