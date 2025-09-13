@@ -130,7 +130,7 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 		local offsetX = #string.split(TextOnMouseEnter, "")*7
 		button.MouseEnter:Connect(function(x, y)
 			local MouseText = Instance.new("TextLabel")
-			MouseText.Zindex = 9999
+			MouseText.ZIndex = 1000
 			mousetext = MouseText
 			MouseText.Parent = gui.gui
 			MouseText.BorderSizePixel = 0
@@ -189,7 +189,7 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 			MouseText.BorderSizePixel = 0
 			MouseText.TextWrapped = true
 			MouseText.TextScaled = true
-			MouseText.Zindex = 9999
+			MouseText.ZIndex = 1000
 			UiCorner(MouseText, 1)
 			MouseText.Text = TextOnMouseEnter
 			MouseText.TextColor3 = Color3.fromRGB(239, 239, 239)
@@ -267,7 +267,7 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 			MouseText.Parent = gui.gui
 			MouseText.BorderSizePixel = 0
 			MouseText.TextWrapped = true
-			MouseText.Zindex = 9999
+			MouseText.ZIndex = 1000
 			MouseText.TextScaled = true
 			UiCorner(MouseText, 1)
 			MouseText.Text = TextOnMouseEnter
@@ -292,6 +292,80 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	return button
 end
 
+function Guis:AddKeybind(Text, fun, TextOnMouseEnter)
+	local Keybind = Enum.KeyCode.Y
+	local button = Instance.new("TextButton")
+	button.Text = Text
+	button.Name = Text
+	button.Parent = gui.ScrollingFrame1
+	button.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+	button.TextColor3 = Color3.fromRGB(239, 239, 239)
+	button.RichText = true
+	button.TextWrapped = true
+	button.TextScaled = true
+	button.AutoButtonColor = false
+	UiCorner(button, 3)
+	local image = NewImage(button, "rbxassetid://71459514973341")
+	local keycodee = Instance.new("TextLabel")
+	keycodee.Parent = image
+	keycodee.Text = Keybind.Name
+	keycodee.Size = UDim2.new(0.25, 0, 0.25, 0)
+	keycodee.TextWrapped = true
+	keycodee.TextScaled = true
+	keycodee.TextColor3 = Color3.fromRGB(239, 239, 239)
+	keycodee.BackgroundTransparency = 1
+	keycodee.Position = UDim2.new(0.5, 0, 0.5, 0)
+	image.Size = UDim2.new(0.25, 0, 1, 0)
+	image.Position = UDim2.new(1, 0, 0, 0)
+	button.MouseButton1Click:Connect(function()
+		button.Text = "..."
+		wait(0.3)
+		local KeyCode = uis.InputBegan:Wait()
+		if KeyCode.KeyCode.EnumType == Enum.KeyCode then
+			Keybind = KeyCode.KeyCode
+			keycodee.Text = KeyCode.KeyCode.Name
+			button.Text = Text
+		end
+	end)
+	uis.InputBegan:Connect(function(i, g)
+		if g then return end
+		if i.KeyCode == Keybind then
+			fun()
+		end
+	end)
+	local mousetext = nil
+	if TextOnMouseEnter then
+		local offsetX = #string.split(TextOnMouseEnter, "")*7
+		button.MouseEnter:Connect(function(x, y)
+			local MouseText = Instance.new("TextLabel")
+			mousetext = MouseText
+			MouseText.Parent = gui.gui
+			MouseText.BorderSizePixel = 0
+			MouseText.TextWrapped = true
+			MouseText.ZIndex = 1000
+			MouseText.TextScaled = true
+			UiCorner(MouseText, 1)
+			MouseText.Text = TextOnMouseEnter
+			MouseText.TextColor3 = Color3.fromRGB(239, 239, 239)
+			MouseText.Size = UDim2.new(0, offsetX, 0, 0)
+			MouseText:TweenSize(UDim2.new(0, offsetX, 0.05, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+			MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			MouseText.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+			mouse.Move:Connect(function()
+				MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			end)
+		end)
+		button.MouseLeave:Connect(function()
+			if mousetext ~= nil then
+				mousetext:TweenSize(UDim2.new(0, offsetX, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+				game:GetService("Debris"):AddItem(mousetext, 0.31)
+			end
+			mousetext = nil
+		end)
+	end
+	return button
+end
+
 function Guis:AddSection(Text)
 	local TextLabel = Instance.new("TextLabel")
 	TextLabel.Parent = gui.ScrollingFrame1
@@ -302,6 +376,7 @@ function Guis:AddSection(Text)
 	TextLabel.TextScaled = true
 	TextLabel.TextWrapped = true
 	TextLabel.RichText = true
+	return TextLabel
 end
 
 local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
