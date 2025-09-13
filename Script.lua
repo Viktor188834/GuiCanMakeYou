@@ -35,7 +35,7 @@ local sound = nil
 local function ClickSound()
 	if sound == nil then
 		sound = Instance.new("Sound")
-		sound.Parent = plr.PlayerGui
+		sound.Parent = plr
 		sound.SoundId = "rbxassetid://6895079853"
 		repeat wait() until sound.IsLoaded == true
 		sound.Volume = 1
@@ -44,6 +44,14 @@ local function ClickSound()
 		sound:Play()
 	end
 end
+
+plr.CharacterAdded:Connect(function(char)
+	sound = Instance.new("Sound")
+	sound.Parent = plr
+	sound.SoundId = "rbxassetid://6895079853"
+	repeat wait() until sound.IsLoaded == true
+	sound.Volume = 1
+end)
 
 gui.gui.ResetOnSpawn = false
 gui.gui.Parent = plr.PlayerGui
