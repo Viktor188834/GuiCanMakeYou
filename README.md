@@ -1,18 +1,20 @@
-Библиотека: loadstring(game:HttpGet(""))()
+Библиотека: loadstring(game:HttpGet("https://raw.githubusercontent.com/Viktor188834/GuiCanMakeYou/refs/heads/main/Script.lua"))()
 
-AddClickButton("Teleport", function()
+после этой строки которая библиотека, 
+
+--[[AddClickButton("Text", function()
 	print("LLLLLLolololol")
-end, "You are loser")
+end, "MouseText(Необезательно)")]]
 
-AddTextBox("Speed", function(text)
+--[[AddTextBox("Speed", function(text)
 	Speeeed = tonumber(text)
-end, "Change Your Speed to Entered Number")
+end, "MouseText(Необезательно)")]]
 
-AddSlideButton("PrintLol", function()
+--[[AddSlideButton("PrintLol", function()
 	print("On")
 end, function()
 	print("Off")
-end, "Test")
+end, "MouseText(Необезательно)")]]
 
 --character - персонаж, тоесть твой персонаж
 --например телепортация: character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0)
