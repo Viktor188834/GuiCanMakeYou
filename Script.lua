@@ -155,6 +155,7 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 		end)
 	end
 	-->>
+	return button
 end
 
 function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
@@ -207,6 +208,7 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 		end)
 	end
 	-->>
+	return button
 end
 
 function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
@@ -284,6 +286,7 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 		end)
 	end
 	-->>
+	return button
 end
 
 function Guis:AddSection(Text)
