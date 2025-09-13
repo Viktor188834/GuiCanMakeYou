@@ -129,6 +129,7 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 		local offsetX = #string.split(TextOnMouseEnter, "")*7
 		button.MouseEnter:Connect(function(x, y)
 			local MouseText = Instance.new("TextLabel")
+			MouseText.Zindex = 9999
 			mousetext = MouseText
 			MouseText.Parent = gui.gui
 			MouseText.BorderSizePixel = 0
@@ -185,6 +186,7 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 			MouseText.BorderSizePixel = 0
 			MouseText.TextWrapped = true
 			MouseText.TextScaled = true
+			MouseText.Zindex = 9999
 			UiCorner(MouseText, 1)
 			MouseText.Text = TextOnMouseEnter
 			MouseText.TextColor3 = Color3.fromRGB(239, 239, 239)
@@ -260,6 +262,7 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 			MouseText.Parent = gui.gui
 			MouseText.BorderSizePixel = 0
 			MouseText.TextWrapped = true
+			MouseText.Zindex = 9999
 			MouseText.TextScaled = true
 			UiCorner(MouseText, 1)
 			MouseText.Text = TextOnMouseEnter
