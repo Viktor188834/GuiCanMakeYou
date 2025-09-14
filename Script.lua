@@ -9,7 +9,7 @@ local DeveloperDisplayName = "gondonmev1488"
 local Guis = {}
 
 local gui = {
-	gui = plr.PlayerGui:FindFirstChildOfClass("ScreenGui"),
+	gui = instance.new("ScreenGui", plr.PlayerGui),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
@@ -83,6 +83,8 @@ local StarterGui = {
 	TextLabelV1 = Instance.new("TextLabel")
 }
 
+gui.gui.ResetOnSpawn = false
+gui.gui.Enabled = true
 StarterGui.Image.Size = UDim2.new(0.2, 0, 0.4, 0)
 StarterGui.Image.Position = UDim2.new(0, mouse.X, 0, mouse.Y)
 StarterGui.Image.BorderSizePixel = 0
@@ -108,9 +110,6 @@ wait(3.1)
 for i,v in StarterGui do
 	v:Destroy()
 end
-
-gui.gui.ResetOnSpawn = false
-gui.gui.Enabled = true
 
 gui.uigridlayout.Parent = gui.ScrollingFrame1
 gui.uigridlayout.CellSize = UDim2.new(0.8, 0, 0, 40)
