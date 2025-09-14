@@ -8,7 +8,7 @@ local EnabledKeyBinds = true
 local Guis = {}
 
 local gui = {
-	gui = plr.PlayerGui:FindFirstChildOfClass("ScreenGui"),
+	gui = plr.PlayerGui:FindFirstChildOfClass("ScreenGui") or Instance.new("ScreenGui", plr.PlayerGui),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
@@ -53,9 +53,11 @@ plr.CharacterAdded:Connect(function(char)
 	sound.Parent = plr
 	sound.SoundId = "rbxassetid://6895079853"
 	repeat wait() until sound.IsLoaded == true
-	sound.Volume = 1
+	sound.Volume = 5
 end)
 
+gui.gui.ResetOnSpawn = false
+gui.gui.IgnoreGuiInset = true
 gui.uigridlayout.Parent = gui.ScrollingFrame1
 gui.uigridlayout.CellSize = UDim2.new(0.8, 0, 0, 40)
 gui.uigridlayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -139,14 +141,12 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 	button.RichText = true
 	button.TextWrapped = true
 	button.TextScaled = true
-	button.Size = UDim2.new(1, 0, 1, 0)
-	button.Position = UDim2.new(0, 0, 1, 0)
 	button.AutoButtonColor = false
 	button.TextXAlignment = Enum.TextXAlignment.Left
 	UiCorner(button, 3)
 	local image = NewImage(button, "rbxassetid://16081386298")
-	image.Size = UDim2.new(0.2, 0, 0.6, 0)
-	image.Position = UDim2.new(1, 0, 0.2, 0)
+	image.Size = UDim2.new(0.25, 0, 1, 0)
+	image.Position = UDim2.new(1, 0, 0, 0)
 	-- functions<<
 	button.MouseButton1Click:Connect(function()
 		ClickSound()
@@ -170,12 +170,13 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 			MouseText:TweenSize(UDim2.new(0, offsetX, 0.05, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
 			MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
 			MouseText.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+			game:GetService("Debris"):AddItem(MouseText, 5)
 			mouse.Move:Connect(function()
 				MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
 			end)
 		end)
 		button.MouseLeave:Connect(function()
-			if mousetext ~= nil then
+			if mousetext then
 				mousetext:TweenSize(UDim2.new(0, offsetX, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
 				game:GetService("Debris"):AddItem(mousetext, 0.31)
 			end
@@ -224,12 +225,13 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 			MouseText:TweenSize(UDim2.new(0, offsetX, 0.05, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
 			MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
 			MouseText.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+			game:GetService("Debris"):AddItem(MouseText, 5)
 			mouse.Move:Connect(function()
 				MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
 			end)
 		end)
 		button.MouseLeave:Connect(function()
-			if mousetext ~= nil then
+			if mousetext then
 				mousetext:TweenSize(UDim2.new(0, offsetX, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
 				game:GetService("Debris"):AddItem(mousetext, 0.31)
 			end
@@ -303,12 +305,13 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 			MouseText:TweenSize(UDim2.new(0, offsetX, 0.05, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
 			MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
 			MouseText.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+			game:GetService("Debris"):AddItem(MouseText, 5)
 			mouse.Move:Connect(function()
 				MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
 			end)
 		end)
 		button.MouseLeave:Connect(function()
-			if mousetext ~= nil then
+			if mousetext then
 				mousetext:TweenSize(UDim2.new(0, offsetX, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
 				game:GetService("Debris"):AddItem(mousetext, 0.31)
 			end
@@ -382,12 +385,13 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 			MouseText:TweenSize(UDim2.new(0, offsetX, 0.05, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
 			MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
 			MouseText.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+			game:GetService("Debris"):AddItem(MouseText, 5)
 			mouse.Move:Connect(function()
 				MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
 			end)
 		end)
 		button.MouseLeave:Connect(function()
-			if mousetext ~= nil then
+			if mousetext then
 				mousetext:TweenSize(UDim2.new(0, offsetX, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
 				game:GetService("Debris"):AddItem(mousetext, 0.31)
 			end
@@ -432,5 +436,112 @@ uis.InputBegan:Connect(function(i, g)
 		end
 	end
 end)
+
+function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseEnter)
+	local button = Instance.new("TextButton")
+	button.Text = Text
+	button.Name = Text
+	button.Parent = gui.ScrollingFrame1
+	button.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+	button.TextColor3 = Color3.fromRGB(239, 239, 239)
+	button.RichText = true
+	button.TextWrapped = true
+	button.TextScaled = true
+	button.AutoButtonColor = false
+	local image = NewImage(button, "rbxassetid://2243841635")
+	image.Size = UDim2.new(0.25, 0, 1, 0)
+	image.Position = UDim2.new(1, 0, 0, 0)
+	local SFv2 = Instance.new("ScrollingFrame")
+	SFv2.Parent = gui.Framev1
+	SFv2.Size = UDim2.new(1, 0, 0, 0)
+	SFv2.CanvasSize = UDim2.new(0, 0, 0, 0)
+	SFv2.Visible = false
+	SFv2.Position = UDim2.new(1, 0, 0, 0)
+	SFv2.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+	local uigridLayoutv1 = Instance.new("UIGridLayout")
+	uigridLayoutv1.Parent = SFv2
+	uigridLayoutv1.CellSize = UDim2.new(0.95, 0, 0, 25)
+	uigridLayoutv1.CellPadding = UDim2.new(0, 5, 0, 5)
+	local function SetUp()
+		for i,v in SFv2:GetChildren() do
+			if v:IsA("TextButton") then
+				v:Destroy()
+			end
+		end
+		for i, v in pairs(game.Players:GetPlayers()) do
+			local newbutton = Instance.new("TextButton")
+			newbutton.Parent = SFv2
+			newbutton.Text = v.Name
+			newbutton.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
+			newbutton.TextColor3 = Color3.fromRGB(239, 239, 239)
+			newbutton.TextWrapped = true
+			newbutton.TextScaled = true
+			newbutton.AutoButtonColor = false
+			UiCorner(newbutton, 3)
+			newbutton.MouseButton1Click:Connect(function()
+				ClickSound()
+				SFv2.Size = UDim2.new(1, 0, 0, 0)
+				SFv2.Visible = false
+				funcWithPlayerInstance(v)
+			end)
+		end
+	end
+	SFv2.ChildAdded:Connect(function()
+		SFv2.CanvasSize = UDim2.new(0, 0, 0, uigridLayoutv1.AbsoluteContentSize.Y)
+	end)
+	SFv2.ChildRemoved:Connect(function()
+		SFv2.CanvasSize = UDim2.new(0, 0, 0, uigridLayoutv1.AbsoluteContentSize.Y)
+	end)
+	UiCorner(SFv2, 5)
+	UiCorner(button, 5)
+	local cd = false
+	button.MouseButton1Click:Connect(function()
+		if cd == true then return end
+		ClickSound()
+		if SFv2.Visible == false then
+			SFv2.Visible = true
+			SetUp()
+			SFv2:TweenSize(UDim2.new(1, 0, 3, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5, false, function()
+				cd = false
+			end)
+		else
+			SFv2:TweenSize(UDim2.new(1, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5, false, function()
+				cd = false
+				SFv2.Visible = false
+			end)
+		end
+	end)
+	local mousetext = nil
+	if TextOnMouseEnter then
+		local offsetX = #string.split(TextOnMouseEnter, "")*7
+		button.MouseEnter:Connect(function(x, y)
+			local MouseText = Instance.new("TextLabel")
+			mousetext = MouseText
+			MouseText.Parent = gui.gui
+			MouseText.BorderSizePixel = 0
+			MouseText.TextWrapped = true
+			MouseText.ZIndex = 1000
+			MouseText.TextScaled = true
+			UiCorner(MouseText, 1)
+			MouseText.Text = TextOnMouseEnter
+			MouseText.TextColor3 = Color3.fromRGB(239, 239, 239)
+			MouseText.Size = UDim2.new(0, offsetX, 0, 0)
+			MouseText:TweenSize(UDim2.new(0, offsetX, 0.05, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+			MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			MouseText.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+			game:GetService("Debris"):AddItem(MouseText, 5)
+			mouse.Move:Connect(function()
+				MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			end)
+		end)
+		button.MouseLeave:Connect(function()
+			if mousetext then
+				mousetext:TweenSize(UDim2.new(0, offsetX, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+				game:GetService("Debris"):AddItem(mousetext, 0.31)
+			end
+			mousetext = nil
+		end)
+	end
+end
 
 return Guis
