@@ -6,7 +6,6 @@ local mouse = plr:GetMouse()
 local Guis = {}
 
 local gui = {
-	gui = Instance.new("ScreenGui"),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
@@ -52,9 +51,6 @@ plr.CharacterAdded:Connect(function(char)
 	repeat wait() until sound.IsLoaded == true
 	sound.Volume = 1
 end)
-
-gui.gui.ResetOnSpawn = false
-gui.gui.Parent = plr.PlayerGui
 gui.uigridlayout.Parent = gui.ScrollingFrame1
 gui.uigridlayout.CellSize = UDim2.new(0.8, 0, 0, 40)
 gui.uigridlayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -70,7 +66,9 @@ end)
 
 UiCorner(gui.ScrollingFrame1, 5)
 UiCorner(gui.Framev1, 5)
-gui.Framev1.Parent = gui.gui
+if plr.PlayerGui:FindFirstChildOfClass("ScreenGui") then
+	gui.Framev1.Parent = plr.PlayerGui:FindFirstChildOfClass("ScreenGui")
+end
 gui.Framev1.Size = UDim2.new(0.15, 0, 0.1, 0)
 gui.Framev1.Draggable = true
 gui.Framev1.Position = UDim2.new(0.7, 0, 0.5, 0)
