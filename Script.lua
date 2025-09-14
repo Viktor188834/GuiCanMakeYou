@@ -51,27 +51,23 @@ end
 
 local Sound1 = nil
 
-local function TextSound()
-	if Sound1 == nil then
-		Sound1 = Instance.new("Sound")
-		Sound1.Parent = plr
-		Sound1.Name = "TextSound"
-		Sound1.SoundId = "rbxassetid://5416666166"
-		repeat wait() until Sound1.IsLoaded == true
-		Sound1.Volume = 1
-		Sound1:Play()
-	else
-		Sound1:Play()
-	end
-end
-
 function Guis:TextAccuracy(Text, TextLabelOrTextButton)
 	local Splitted = string.split(Text, "")
 	local arg1 = 1
 	TextLabelOrTextButton.Text = ""
 	repeat
 		TextLabelOrTextButton.Text = TextLabelOrTextButton.Text..Splitted[arg1]
-		TextSound()
+		if Sound1 == nil then
+			Sound1 = Instance.new("Sound")
+			Sound1.Parent = plr
+			Sound1.Name = "TextSound"
+			Sound1.SoundId = "rbxassetid://5416666166"
+			repeat wait() until Sound1.IsLoaded == true
+			Sound1.Volume = 1
+			Sound1:Play()
+		else
+			Sound1:Play()
+		end
 		arg1 += 1
 		wait(math.random(0.5, 0.8))
 	until TextLabelOrTextButton.Text == Text
@@ -162,8 +158,11 @@ gui.Hide.TextScaled = true
 gui.Delete.MouseButton1Click:Connect(function()
 	gui.gui:Destroy()
 	EnabledKeyBinds = false
-	if sound ~= nil then
+	if sound then
 		sound:Destroy()
+	end
+	if Sound1 then
+		Sound1:Destroy()
 	end
 end)
 
