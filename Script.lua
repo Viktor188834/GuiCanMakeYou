@@ -9,7 +9,7 @@ local DeveloperDisplayName = "gondonmev1488"
 local Guis = {}
 
 local gui = {
-	gui = instance.new("ScreenGui", plr.PlayerGui),
+	gui = Instance.new("ScreenGui", plr.PlayerGui),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
