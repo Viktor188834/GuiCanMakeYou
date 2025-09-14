@@ -8,7 +8,7 @@ local EnabledKeyBinds = true
 local Guis = {}
 
 local gui = {
-	gui = plr.PlayerGui:FindFirstChildOfClass("ScreenGui") or Instance.new("ScreenGui", plr.PlayerGui),
+	gui = plr.PlayerGui:FindFirstChildOfClass("ScreenGui"),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
