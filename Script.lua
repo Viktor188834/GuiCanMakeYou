@@ -4,6 +4,7 @@ local plr = game.Players.LocalPlayer
 local mouse = plr:GetMouse()
 local hidded = false
 local EnabledKeyBinds = true
+local DeveloperName = "gondonmev1488"
 
 local Guis = {}
 
@@ -95,7 +96,7 @@ StarterGui.TextLabelV1.Size = UDim2.new(0.8, 0, 0.2, 0)
 StarterGui.TextLabelV1.Position = UDim2.new(0.1, 0, 0.7, 0)
 StarterGui.TextLabelV1.TextWrapped = true
 StarterGui.TextLabelV1.TextScaled = true
-TextAccuracy(game.Players:GetPlayerByUserId(8581728457).DisplayName.."'s Script", StarterGui.TextLabelV1)
+TextAccuracy(DeveloperName.."'s Script", StarterGui.TextLabelV1)
 
 wait(1)
 
