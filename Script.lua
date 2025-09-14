@@ -66,7 +66,7 @@ local function TextSound()
 	end
 end
 
-local function TextAccuracy(Text, TextLabelOrTextButton)
+local function Guis:TextAccuracy(Text, TextLabelOrTextButton)
 	local Splitted = string.split(Text, "")
 	local arg1 = 1
 	TextLabelOrTextButton.Text = ""
