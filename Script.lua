@@ -92,7 +92,6 @@ gui.Delete.TextWrapped = true
 gui.Delete.TextScaled = true
 
 gui.Delete.MouseButton1Click:Connect(function()
-	gui.gui:Destroy()
 	gui.Framev1:Destroy()
 	if sound ~= nil then
 		sound:Destroy()
