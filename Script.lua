@@ -292,6 +292,9 @@ end
 
 function Guis:AddKeybind(Text, fun, StarterKeycode, TextOnMouseEnter)
 	local Keybind = Enum.KeyCode.Y
+	if StarterKeycode then
+		Keybind = StarterKeycode
+	end
 	local button = Instance.new("TextButton")
 	button.Text = Text
 	button.Name = Text
