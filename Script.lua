@@ -3,11 +3,12 @@ local Enabled = true
 local plr = game.Players.LocalPlayer
 local mouse = plr:GetMouse()
 local hidded = false
+local EnabledKeyBinds = true
 
 local Guis = {}
 
 local gui = {
-	gui = Instance.new("ScreenGui"),
+	gui = plr.PlayerGui:FindFirstChildOfClass("ScreenGui"),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
@@ -55,8 +56,6 @@ plr.CharacterAdded:Connect(function(char)
 	sound.Volume = 1
 end)
 
-gui.gui.ResetOnSpawn = false
-gui.gui.Parent = plr.PlayerGui
 gui.uigridlayout.Parent = gui.ScrollingFrame1
 gui.uigridlayout.CellSize = UDim2.new(0.8, 0, 0, 40)
 gui.uigridlayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -107,6 +106,7 @@ gui.Hide.TextScaled = true
 
 gui.Delete.MouseButton1Click:Connect(function()
 	gui.gui:Destroy()
+	EnabledKeyBinds = false
 	if sound ~= nil then
 		sound:Destroy()
 	end
@@ -358,6 +358,7 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 		end
 	end)
 	uis.InputBegan:Connect(function(i, g)
+		if EnabledKeyBinds == false then return end
 		if g then return end
 		if i.KeyCode == Keybind then
 			fun()
