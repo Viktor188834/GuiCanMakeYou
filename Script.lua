@@ -35,7 +35,6 @@ local function NewImage(parent, Image)
 end
 
 local sound = nil
-
 local function ClickSound()
 	if sound == nil then
 		sound = Instance.new("Sound")
@@ -66,7 +65,7 @@ local function TextSound()
 	end
 end
 
-local function Guis:TextAccuracy(Text, TextLabelOrTextButton)
+function Guis:TextAccuracy(Text, TextLabelOrTextButton)
 	local Splitted = string.split(Text, "")
 	local arg1 = 1
 	TextLabelOrTextButton.Text = ""
@@ -596,6 +595,7 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 			mousetext = nil
 		end)
 	end
+	return button
 end
 
 return Guis
