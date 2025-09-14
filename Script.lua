@@ -119,11 +119,13 @@ gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.ScrollingFrame1.UIGridLa
 gui.ScrollingFrame1.ScrollBarImageTransparency = 1
 
 gui.ScrollingFrame1.ChildAdded:Connect(function()
-	gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.ScrollingFrame1.UIGridLayout.AbsoluteContentSize.Y)
+	wait(0.1)
+	gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.uigridlayout.AbsoluteContentSize.Y)
 end)
 
 gui.ScrollingFrame1.ChildRemoved:Connect(function()
-	gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.ScrollingFrame1.UIGridLayout.AbsoluteContentSize.Y)
+	wait(0.1)
+	gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.uigridlayout.AbsoluteContentSize.Y)
 end)
 
 UiCorner(gui.ScrollingFrame1, 5)
