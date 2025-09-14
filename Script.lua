@@ -15,7 +15,7 @@ local gui = {
 	uigridlayout = Instance.new("UIGridLayout"),
 	TextV1 = Instance.new("TextBox"),
 	Delete = Instance.new("TextButton"),
-	Hide = Instance.new("TextButton")
+	Hide = Instance.new("TextButton"),
 }
 
 local function UiCorner(parent, Size)
