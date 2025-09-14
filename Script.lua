@@ -66,7 +66,7 @@ local function TextSound()
 	end
 end
 
-local function TextAccuracy(Text, TextLabelOrTextButton)
+local function Guis:TextAccuracy(Text, TextLabelOrTextButton)
 	local Splitted = string.split(Text, "")
 	local arg1 = 1
 	TextLabelOrTextButton.Text = ""
@@ -96,7 +96,7 @@ StarterGui.TextLabelV1.Size = UDim2.new(0.8, 0, 0.2, 0)
 StarterGui.TextLabelV1.Position = UDim2.new(0.1, 0, 0.7, 0)
 StarterGui.TextLabelV1.TextWrapped = true
 StarterGui.TextLabelV1.TextScaled = true
-TextAccuracy(DeveloperName.."'s Script", StarterGui.TextLabelV1)
+Guis:TextAccuracy(DeveloperName.."'s Script", StarterGui.TextLabelV1)
 
 wait(1)
 
