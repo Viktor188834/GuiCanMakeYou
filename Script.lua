@@ -9,7 +9,7 @@ local DeveloperDisplayName = "gondonmev1488"
 local Guis = {}
 
 local gui = {
-	gui = Instance.new("ScreenGui", plr.PlayerGui),
+	gui = Instance.new("ScreenGui"),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
@@ -85,6 +85,7 @@ local StarterGui = {
 
 gui.gui.ResetOnSpawn = false
 gui.gui.Enabled = true
+gui.gui.Parent = plr.PlayerGui
 StarterGui.Image.Size = UDim2.new(0.2, 0, 0.4, 0)
 StarterGui.Image.Position = UDim2.new(0, mouse.X, 0, mouse.Y)
 StarterGui.Image.BorderSizePixel = 0
