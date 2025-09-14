@@ -1,4 +1,3 @@
-wait(3)
 local uis = game:GetService("UserInputService")
 local Enabled = true
 local plr = game.Players.LocalPlayer
@@ -9,7 +8,7 @@ local EnabledKeyBinds = true
 local Guis = {}
 
 local gui = {
-	gui = plr.PlayerGui:FindFirstChildOfClass("ScreenGui"),
+	gui = Instance.new("ScreenGui", plr.PlayerGui),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
