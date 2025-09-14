@@ -18,13 +18,13 @@ local gui = {
 	Hide = Instance.new("TextButton")
 }
 
-local function UiCorner(parent, Size)
+function UiCorner(parent, Size)
 	local uic = Instance.new("UICorner")
 	uic.Parent = parent
 	uic.CornerRadius = UDim.new(0, Size)
 end
 
-local function NewImage(parent, Image)
+function NewImage(parent, Image)
 	local image = Instance.new("ImageLabel")
 	image.Parent = parent
 	image.Image = Image
@@ -36,7 +36,7 @@ end
 
 local sound = nil
 
-local function ClickSound()
+function ClickSound()
 	if sound == nil then
 		sound = Instance.new("Sound")
 		sound.Parent = plr
@@ -52,7 +52,7 @@ end
 
 local Sound1 = nil
 
-local function TextSound()
+function TextSound()
 	if Sound1 == nil then
 		Sound1 = Instance.new("Sound")
 		Sound1.Parent = plr
@@ -66,7 +66,7 @@ local function TextSound()
 	end
 end
 
-local function Guis:TextAccuracy(Text, TextLabelOrTextButton)
+function Guis:TextAccuracy(Text, TextLabelOrTextButton)
 	local Splitted = string.split(Text, "")
 	local arg1 = 1
 	TextLabelOrTextButton.Text = ""
