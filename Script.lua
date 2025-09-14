@@ -1,21 +1,21 @@
+wait(3)
 local uis = game:GetService("UserInputService")
 local Enabled = true
 local plr = game.Players.LocalPlayer
 local mouse = plr:GetMouse()
 local hidded = false
 local EnabledKeyBinds = true
-local DeveloperDisplayName = "gondonmev1488"
 
 local Guis = {}
 
 local gui = {
-	gui = Instance.new("ScreenGui"),
+	gui = plr.PlayerGui:FindFirstChildOfClass("ScreenGui"),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
 	TextV1 = Instance.new("TextBox"),
 	Delete = Instance.new("TextButton"),
-	Hide = Instance.new("TextButton"),
+	Hide = Instance.new("TextButton")
 }
 
 local function UiCorner(parent, Size)
@@ -35,6 +35,7 @@ local function NewImage(parent, Image)
 end
 
 local sound = nil
+
 local function ClickSound()
 	if sound == nil then
 		sound = Instance.new("Sound")
@@ -51,23 +52,27 @@ end
 
 local Sound1 = nil
 
-function Guis:TextAccuracy(Text, TextLabelOrTextButton)
+local function TextSound()
+	if Sound1 == nil then
+		Sound1 = Instance.new("Sound")
+		Sound1.Parent = plr
+		Sound1.Name = "TextSound"
+		Sound1.SoundId = "rbxassetid://5416666166"
+		repeat wait() until Sound1.IsLoaded == true
+		Sound1.Volume = 1
+		Sound1:Play()
+	else
+		Sound1:Play()
+	end
+end
+
+local function TextAccuracy(Text, TextLabelOrTextButton)
 	local Splitted = string.split(Text, "")
 	local arg1 = 1
 	TextLabelOrTextButton.Text = ""
 	repeat
 		TextLabelOrTextButton.Text = TextLabelOrTextButton.Text..Splitted[arg1]
-		if Sound1 == nil then
-			Sound1 = Instance.new("Sound")
-			Sound1.Parent = plr
-			Sound1.Name = "TextSound"
-			Sound1.SoundId = "rbxassetid://5416666166"
-			repeat wait() until Sound1.IsLoaded == true
-			Sound1.Volume = 1
-			Sound1:Play()
-		else
-			Sound1:Play()
-		end
+		TextSound()
 		arg1 += 1
 		wait(math.random(0.5, 0.8))
 	until TextLabelOrTextButton.Text == Text
@@ -78,9 +83,6 @@ local StarterGui = {
 	TextLabelV1 = Instance.new("TextLabel")
 }
 
-gui.gui.ResetOnSpawn = false
-gui.gui.Enabled = true
-gui.gui.Parent = plr.PlayerGui
 StarterGui.Image.Size = UDim2.new(0.2, 0, 0.4, 0)
 StarterGui.Image.Position = UDim2.new(0, mouse.X, 0, mouse.Y)
 StarterGui.Image.BorderSizePixel = 0
@@ -94,7 +96,7 @@ StarterGui.TextLabelV1.Size = UDim2.new(0.8, 0, 0.2, 0)
 StarterGui.TextLabelV1.Position = UDim2.new(0.1, 0, 0.7, 0)
 StarterGui.TextLabelV1.TextWrapped = true
 StarterGui.TextLabelV1.TextScaled = true
-Guis:TextAccuracy(DeveloperDisplayName.."'s Script", StarterGui.TextLabelV1)
+TextAccuracy(game.Players:GetPlayerByUserId(8581728457).DisplayName.."'s Script", StarterGui.TextLabelV1)
 
 wait(1)
 
@@ -107,10 +109,14 @@ for i,v in StarterGui do
 	v:Destroy()
 end
 
+gui.gui.ResetOnSpawn = false
+gui.gui.Enabled = true
+
 gui.uigridlayout.Parent = gui.ScrollingFrame1
 gui.uigridlayout.CellSize = UDim2.new(0.8, 0, 0, 40)
 gui.uigridlayout.SortOrder = Enum.SortOrder.LayoutOrder
 gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.ScrollingFrame1.UIGridLayout.AbsoluteContentSize.Y)
+gui.ScrollingFrame1.ScrollBarImageTransparency = 1
 
 gui.ScrollingFrame1.ChildAdded:Connect(function()
 	gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.ScrollingFrame1.UIGridLayout.AbsoluteContentSize.Y)
@@ -158,11 +164,8 @@ gui.Hide.TextScaled = true
 gui.Delete.MouseButton1Click:Connect(function()
 	gui.gui:Destroy()
 	EnabledKeyBinds = false
-	if sound then
+	if sound ~= nil then
 		sound:Destroy()
-	end
-	if Sound1 then
-		Sound1:Destroy()
 	end
 end)
 
@@ -510,6 +513,7 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 	SFv2.Visible = false
 	SFv2.Position = UDim2.new(1, 0, 0, 0)
 	SFv2.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+	SFv2.ScrollBarImageTransparency = 1
 	local uigridLayoutv1 = Instance.new("UIGridLayout")
 	uigridLayoutv1.Parent = SFv2
 	uigridLayoutv1.CellSize = UDim2.new(0.95, 0, 0, 25)
@@ -523,7 +527,7 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 		for i, v in pairs(game.Players:GetPlayers()) do
 			local newbutton = Instance.new("TextButton")
 			newbutton.Parent = SFv2
-			newbutton.Text = v.Name
+			newbutton.Text = v.Name..v.DisplayName
 			newbutton.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
 			newbutton.TextColor3 = Color3.fromRGB(239, 239, 239)
 			newbutton.TextWrapped = true
@@ -594,7 +598,6 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 			mousetext = nil
 		end)
 	end
-	return button
 end
 
 return Guis
