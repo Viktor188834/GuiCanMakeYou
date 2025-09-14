@@ -319,8 +319,11 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	return button
 end
 
-function Guis:AddKeybind(Text, fun, TextOnMouseEnter)
+function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 	local Keybind = Enum.KeyCode.Y
+	if StarterKeybind then
+		Keybind = StarterKeybind
+	end
 	local button = Instance.new("TextButton")
 	button.Text = Text
 	button.Name = Text
