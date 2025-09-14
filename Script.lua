@@ -39,6 +39,7 @@ local function ClickSound()
 	if sound == nil then
 		sound = Instance.new("Sound")
 		sound.Parent = plr
+		sound.Name = "ClickSound"
 		sound.SoundId = "rbxassetid://6895079853"
 		repeat wait() until sound.IsLoaded == true
 		sound.Volume = 1
@@ -48,16 +49,68 @@ local function ClickSound()
 	end
 end
 
-plr.CharacterAdded:Connect(function(char)
-	sound = Instance.new("Sound")
-	sound.Parent = plr
-	sound.SoundId = "rbxassetid://6895079853"
-	repeat wait() until sound.IsLoaded == true
-	sound.Volume = 5
-end)
+local Sound1 = nil
+
+local function TextSound()
+	if Sound1 == nil then
+		Sound1 = Instance.new("Sound")
+		Sound1.Parent = plr
+		Sound1.Name = "TextSound"
+		Sound1.SoundId = "rbxassetid://5416666166"
+		repeat wait() until Sound1.IsLoaded == true
+		Sound1.Volume = 1
+		Sound1:Play()
+	else
+		Sound1:Play()
+	end
+end
+
+local function TextAccuracy(Text, TextLabelOrTextButton)
+	local Splitted = string.split(Text, "")
+	local arg1 = 1
+	TextLabelOrTextButton.Text = ""
+	repeat
+		TextLabelOrTextButton.Text = TextLabelOrTextButton.Text..Splitted[arg1]
+		TextSound()
+		arg1 += 1
+		wait(math.random(0.5, 0.8))
+	until TextLabelOrTextButton.Text == Text
+end
+
+local StarterGui = {
+	Image = NewImage(gui.gui, "rbxassetid://126389123237181"),
+	TextLabelV1 = Instance.new("TextLabel")
+}
+
+StarterGui.Image.Size = UDim2.new(0.2, 0, 0.4, 0)
+StarterGui.Image.Position = UDim2.new(0, mouse.X, 0, mouse.Y)
+StarterGui.Image.BorderSizePixel = 0
+wait(0.5)
+StarterGui.TextLabelV1.Parent = StarterGui.Image
+StarterGui.TextLabelV1.TextColor3 = Color3.fromRGB(0, 0, 0)
+StarterGui.TextLabelV1.TextTransparency = 0
+StarterGui.TextLabelV1.BackgroundTransparency = 1
+StarterGui.TextLabelV1.TextStrokeTransparency = 1
+StarterGui.TextLabelV1.Size = UDim2.new(0.8, 0, 0.2, 0)
+StarterGui.TextLabelV1.Position = UDim2.new(0.1, 0, 0.7, 0)
+StarterGui.TextLabelV1.TextWrapped = true
+StarterGui.TextLabelV1.TextScaled = true
+TextAccuracy(game.Players:GetPlayerByUserId(8581728457).DisplayName.."'s Script", StarterGui.TextLabelV1)
+
+wait(1)
+
+game:GetService("TweenService"):Create(StarterGui.Image, TweenInfo.new(3), {ImageTransparency = 1}):Play()
+game:GetService("TweenService"):Create(StarterGui.TextLabelV1, TweenInfo.new(3), {TextTransparency = 1}):Play()
+
+wait(3.1)
+
+for i,v in StarterGui do
+	v:Destroy()
+end
 
 gui.gui.ResetOnSpawn = false
 gui.gui.Enabled = true
+
 gui.uigridlayout.Parent = gui.ScrollingFrame1
 gui.uigridlayout.CellSize = UDim2.new(0.8, 0, 0, 40)
 gui.uigridlayout.SortOrder = Enum.SortOrder.LayoutOrder
