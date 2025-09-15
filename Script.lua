@@ -96,7 +96,7 @@ StarterGui.TextLabelV1.Size = UDim2.new(0.8, 0, 0.2, 0)
 StarterGui.TextLabelV1.Position = UDim2.new(0.1, 0, 0.7, 0)
 StarterGui.TextLabelV1.TextWrapped = true
 StarterGui.TextLabelV1.TextScaled = true
-Guis:TextAccuracy(DeveloperName.."'s Script", StarterGui.TextLabelV1)
+Guis:TextAccuracy(DeveloperName.."'s Gui", StarterGui.TextLabelV1)
 
 wait(1)
 
