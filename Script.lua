@@ -408,8 +408,10 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 	image.Size = UDim2.new(0.25, 0, 1, 0)
 	image.Position = UDim2.new(1, 0, 0, 0)
 	button.MouseButton1Click:Connect(function()
+		local arg1Text = button.Text
 		button.Text = "..."
 		wait(0.3)
+		button.Text = arg1Text
 		local KeyCode = uis.InputBegan:Wait()
 		if KeyCode.KeyCode.EnumType == Enum.KeyCode then
 			Keybind = KeyCode.KeyCode
