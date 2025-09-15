@@ -529,7 +529,7 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 		for i, v in pairs(game.Players:GetPlayers()) do
 			local newbutton = Instance.new("TextButton")
 			newbutton.Parent = SFv2
-			newbutton.Text = v.Name.." ( "..v.DisplayName.." )"
+			newbutton.Text = v.Name.." ("..v.DisplayName..")"
 			newbutton.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
 			newbutton.TextColor3 = Color3.fromRGB(239, 239, 239)
 			newbutton.TextWrapped = true
