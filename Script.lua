@@ -211,7 +211,7 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 	end)
 	local mousetext = nil
 	if TextOnMouseEnter then
-		local offsetX = #string.split(TextOnMouseEnter, "")*7
+		local offsetX = #string.split(TextOnMouseEnter, "")*15
 		button.MouseEnter:Connect(function(x, y)
 			local MouseText = Instance.new("TextLabel")
 			MouseText.ZIndex = 1000
@@ -266,7 +266,7 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 	end)
 	local mousetext = nil
 	if TextOnMouseEnter then
-		local offsetX = #string.split(TextOnMouseEnter, "")*7
+		local offsetX = #string.split(TextOnMouseEnter, "")*15
 		button.MouseEnter:Connect(function(x, y)
 			local MouseText = Instance.new("TextLabel")
 			mousetext = MouseText
@@ -346,7 +346,7 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	end)
 	local mousetext = nil
 	if TextOnMouseEnter then
-		local offsetX = #string.split(TextOnMouseEnter, "")*7
+		local offsetX = #string.split(TextOnMouseEnter, "")*15
 		button.MouseEnter:Connect(function(x, y)
 			local MouseText = Instance.new("TextLabel")
 			mousetext = MouseText
@@ -426,7 +426,7 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 	end)
 	local mousetext = nil
 	if TextOnMouseEnter then
-		local offsetX = #string.split(TextOnMouseEnter, "")*7
+		local offsetX = #string.split(TextOnMouseEnter, "")*15
 		button.MouseEnter:Connect(function(x, y)
 			local MouseText = Instance.new("TextLabel")
 			mousetext = MouseText
@@ -571,7 +571,7 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 	end)
 	local mousetext = nil
 	if TextOnMouseEnter then
-		local offsetX = #string.split(TextOnMouseEnter, "")*7
+		local offsetX = #string.split(TextOnMouseEnter, "")*15
 		button.MouseEnter:Connect(function(x, y)
 			local MouseText = Instance.new("TextLabel")
 			mousetext = MouseText
