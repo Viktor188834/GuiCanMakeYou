@@ -600,6 +600,7 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 			mousetext = nil
 		end)
 	end
+	return button
 end
 
 return Guis
