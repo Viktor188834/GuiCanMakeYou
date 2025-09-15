@@ -414,7 +414,6 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 		if KeyCode.KeyCode.EnumType == Enum.KeyCode then
 			Keybind = KeyCode.KeyCode
 			keycodee.Text = KeyCode.KeyCode.Name
-			button.Text = Text
 		end
 	end)
 	uis.InputBegan:Connect(function(i, g)
