@@ -410,12 +410,12 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 	button.MouseButton1Click:Connect(function()
 		local arg1Text = button.Text
 		button.Text = "..."
-		wait(0.3)
-		button.Text = arg1Text
+		wait(0.5)
 		local KeyCode = uis.InputBegan:Wait()
 		if KeyCode.KeyCode.EnumType == Enum.KeyCode then
 			Keybind = KeyCode.KeyCode
 			keycodee.Text = KeyCode.KeyCode.Name
+			button.Text = arg1Text
 		end
 	end)
 	uis.InputBegan:Connect(function(i, g)
