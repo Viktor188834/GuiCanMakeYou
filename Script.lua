@@ -330,17 +330,20 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	-- functions<<
 	local En = false
 	local coldown = false
+	local Activated = false
 	button.MouseButton1Click:Connect(function()
 		ClickSound()
 		if En == false then
 			En = true
 			game:GetService("TweenService"):Create(button, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(0, 165, 0)}):Play()
 			game:GetService("TweenService"):Create(Slide, TweenInfo.new(0.2), {Position = UDim2.new(((1-Slide.Size.X.Scale)-0.01), 0, 0.05, 0), BackgroundColor3 = Color3.fromRGB(0, 91, 0)}):Play()
+			Activated = true
 			functionOn()
 		elseif En == true then
 			En = false
 			game:GetService("TweenService"):Create(button, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(165, 0, 0)}):Play()
 			game:GetService("TweenService"):Create(Slide, TweenInfo.new(0.2), {Position = UDim2.new(0.01, 0, 0.05, 0), BackgroundColor3 = Color3.fromRGB(91, 0, 0)}):Play()
+			Activated = false
 			functionOff()
 		end
 	end)
