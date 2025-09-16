@@ -113,7 +113,7 @@ gui.gui.ResetOnSpawn = false
 gui.gui.Enabled = true
 
 gui.uigridlayout.Parent = gui.ScrollingFrame1
-gui.uigridlayout.CellSize = UDim2.new(0.8, 0, 0, 40)
+gui.uigridlayout.CellSize = UDim2.new(0.75, 0, 0, 40)
 gui.uigridlayout.SortOrder = Enum.SortOrder.LayoutOrder
 gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.ScrollingFrame1.UIGridLayout.AbsoluteContentSize.Y)
 gui.ScrollingFrame1.ScrollBarImageTransparency = 1
