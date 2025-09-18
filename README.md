@@ -20,3 +20,4 @@ end, "TextOnMouseEnter")
 Guis:AddTextBox("ChangeSpeed", function(TextOnExit)
 	character.Humanoid.WalkSpeed = tonumber(TextOnExit)
 end, "TextOnMouseEnter")
+
