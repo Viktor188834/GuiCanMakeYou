@@ -19,6 +19,16 @@ function WaitForIsA(parent, ClassName, MaxTime)
 	end
 end
 
+function NewImage(parent, Image)
+	local image = Instance.new("ImageLabel")
+	image.Parent = parent
+	image.Image = Image
+	image.Active = false
+	image.BackgroundTransparency = 1
+	repeat wait() image.Image = Image until image.Image == Image
+	return image
+end
+
 local gui = {
 	gui = Instance.new("ScreenGui", game:GetService("CoreGui") or WaitForIsA(plr, "PlayerGui")),
 	Framev1 = Instance.new("Frame"),
@@ -107,16 +117,6 @@ function UiCorner(parent, Size)
 	local uic = Instance.new("UICorner")
 	uic.Parent = parent
 	uic.CornerRadius = UDim.new(0, Size)
-end
-
-function NewImage(parent, Image)
-	local image = Instance.new("ImageLabel")
-	image.Parent = parent
-	image.Image = Image
-	image.Active = false
-	image.BackgroundTransparency = 1
-	repeat wait() image.Image = Image until image.Image == Image
-	return image
 end
 
 local sound = nil
