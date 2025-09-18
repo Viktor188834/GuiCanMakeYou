@@ -8,8 +8,19 @@ local DeveloperName = "gondonmev1488"
 
 local Guis = {}
 
+function WaitForIsA(parent, ClassName, MaxTime)
+	MaxTime = MaxTime or 10
+	local StartTime = os.clock()
+	while os.clock() - StartTime < MaxTime do
+		if parent:FindFirstChildOfClass(ClassName) then
+			return parent:FindFirstChildOfClass(ClassName)
+		end
+		wait()
+	end
+end
+
 local gui = {
-	gui = Instance.new("ScreenGui", game:GetService("CoreGui")),
+	gui = Instance.new("ScreenGui", game:GetService("CoreGui") or WaitForIsA(plr, "PlayerGui")),
 	Framev1 = Instance.new("Frame"),
 	ScrollingFrame1 = Instance.new("ScrollingFrame"),
 	uigridlayout = Instance.new("UIGridLayout"),
@@ -426,6 +437,121 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 		if g then return end
 		if i.KeyCode == Keybind then
 			fun()
+		end
+	end)
+	local mousetext = nil
+	if TextOnMouseEnter then
+		local offsetX = #string.split(TextOnMouseEnter, "")*15
+		button.MouseEnter:Connect(function(x, y)
+			local MouseText = Instance.new("TextLabel")
+			mousetext = MouseText
+			MouseText.Parent = gui.gui
+			MouseText.BorderSizePixel = 0
+			MouseText.TextWrapped = true
+			MouseText.ZIndex = 1000
+			MouseText.TextScaled = true
+			UiCorner(MouseText, 1)
+			MouseText.Text = TextOnMouseEnter
+			MouseText.TextColor3 = Color3.fromRGB(239, 239, 239)
+			MouseText.Size = UDim2.new(0, offsetX, 0, 0)
+			MouseText:TweenSize(UDim2.new(0, offsetX, 0.05, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+			MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			MouseText.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+			game:GetService("Debris"):AddItem(MouseText, 5)
+			mouse.Move:Connect(function()
+				MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			end)
+		end)
+		button.MouseLeave:Connect(function()
+			if mousetext then
+				mousetext:TweenSize(UDim2.new(0, offsetX, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+				game:GetService("Debris"):AddItem(mousetext, 0.31)
+			end
+			mousetext = nil
+		end)
+	end
+	return button
+end
+
+function Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, TextOnMouseEnter)
+	local Keybind = Enum.KeyCode.Y
+	if StarterKeybind then
+		Keybind = StarterKeybind
+	end
+	local button = Instance.new("TextButton")
+	button.Text = ""
+	button.Name = Text
+	button.Parent = gui.ScrollingFrame1
+	button.BackgroundColor3 = Color3.fromRGB(165, 0, 0)
+	button.TextColor3 = Color3.fromRGB(239, 239, 239)
+	button.RichText = true
+	button.TextWrapped = true
+	button.TextScaled = true
+	button.AutoButtonColor = false
+	local Textt = Instance.new("TextLabel")
+	Textt.Parent = button
+	Textt.Text = Text
+	Textt.TextColor3 = Color3.fromRGB(231, 231, 231)
+	Textt.Size = UDim2.new(1, 0, 1, 0)
+	Textt.Position = UDim2.new(0, 0, 0, 0)
+	Textt.TextWrapped = true
+	Textt.TextScaled = true
+	Textt.BackgroundTransparency = 1
+	Textt.ZIndex = 2
+	local Slide = Instance.new("Frame")
+	Slide.Parent = button
+	Slide.BackgroundColor3 = Color3.fromRGB(91, 0, 0)
+	UiCorner(Slide, 9999)
+	Slide.Size = UDim2.new(0.25, 0, 0.9, 0)
+	Slide.Position = UDim2.new(0.01, 0, 0.05, 0)
+	UiCorner(button, 3)
+	local image = NewImage(button, "rbxassetid://71459514973341")
+	local keycodee = Instance.new("TextLabel")
+	keycodee.Parent = image
+	keycodee.Text = Keybind.Name
+	keycodee.Size = UDim2.new(0.25, 0, 0.25, 0)
+	keycodee.TextWrapped = true
+	keycodee.TextScaled = true
+	keycodee.TextColor3 = Color3.fromRGB(239, 239, 239)
+	keycodee.BackgroundTransparency = 1
+	keycodee.Position = UDim2.new(0.5, 0, 0.5, 0)
+	image.Size = UDim2.new(0.25, 0, 1, 0)
+	image.Position = UDim2.new(1, 0, 0, 0)
+	local En = false
+	local coldown = false
+	local Activated = false
+	local function D()
+		if En == false then
+			En = true
+			game:GetService("TweenService"):Create(button, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(0, 165, 0)}):Play()
+			game:GetService("TweenService"):Create(Slide, TweenInfo.new(0.2), {Position = UDim2.new(((1-Slide.Size.X.Scale)-0.01), 0, 0.05, 0), BackgroundColor3 = Color3.fromRGB(0, 91, 0)}):Play()
+			Activated = true
+			functionOn()
+		elseif En == true then
+			En = false
+			game:GetService("TweenService"):Create(button, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(165, 0, 0)}):Play()
+			game:GetService("TweenService"):Create(Slide, TweenInfo.new(0.2), {Position = UDim2.new(0.01, 0, 0.05, 0), BackgroundColor3 = Color3.fromRGB(91, 0, 0)}):Play()
+			Activated = false
+			functionOff()
+		end
+	end
+	button.MouseButton1Click:Connect(function()
+		ClickSound()
+		local arg1Text = Textt.Text
+		Textt.Text = "..."
+		wait(0.5)
+		local KeyCode = uis.InputBegan:Wait()
+		if KeyCode.KeyCode.EnumType == Enum.KeyCode then
+			Keybind = KeyCode.KeyCode
+			keycodee.Text = KeyCode.KeyCode.Name
+			Textt.Text = arg1Text
+		end
+	end)
+	uis.InputBegan:Connect(function(i, g)
+		if EnabledKeyBinds == false then return end
+		if g then return end
+		if i.KeyCode == Keybind then
+			D()
 		end
 	end)
 	local mousetext = nil
