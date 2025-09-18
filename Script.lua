@@ -33,7 +33,7 @@ function Guis:Notification(Table)
 	local Text = Table.Text
 	local TextTittle = Table.TextTittle
 	local Duration = Table.Duration or 7
-	local Image = Table.Image or ""
+	local Image = Table.Image
 	local MNF = Instance.new("CanvasGroup")
 	MNF.Parent = gui.gui
 	MNF.BackgroundColor3 = Color3.fromRGB(21, 21, 21)
@@ -71,10 +71,12 @@ function Guis:Notification(Table)
 		Descrpt.Size = UDim2.new(0.5, 0, 0.7, 0)
 		Descrpt.Position = UDim2.new(0.05, 0, 0.05, 0)
 	end
-	local Imae = NewImage(MNF, Image)
-	Imae.Size = UDim2.new(0.3, 0, 0.75, 0)
-	Imae.Position = UDim2.new(0.65, 0, 0.125, 0)
-	Imae.Image = ""
+	if Image then
+		local Imae = NewImage(MNF, Image)
+		Imae.Size = UDim2.new(0.3, 0, 0.75, 0)
+		Imae.Position = UDim2.new(0.65, 0, 0.125, 0)
+		Imae.Image = ""
+	end
 	local DI = Instance.new("Frame")
 	DI.Size = UDim2.new(1, 0, 0.07, 0)
 	DI.Position = UDim2.new(0, 0, 0.95, 0)
