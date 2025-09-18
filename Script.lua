@@ -90,7 +90,6 @@ function Guis:Notification(Table)
 		local Imae = NewImage(MNF, Image)
 		Imae.Size = UDim2.new(0.3, 0, 0.75, 0)
 		Imae.Position = UDim2.new(0.65, 0, 0.125, 0)
-		Imae.Image = ""
 	end
 	local DI = Instance.new("Frame")
 	DI.Size = UDim2.new(1, 0, 0.07, 0)
