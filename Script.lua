@@ -29,6 +29,73 @@ local gui = {
 	Hide = Instance.new("TextButton")
 }
 
+function Guis:Notification(Table)
+	local Text = Table.Text
+	local TextTittle = Table.TextTittle
+	local Duration = Table.Duration or 7
+	local Image = Table.Image or ""
+	local MNF = Instance.new("CanvasGroup")
+	MNF.Parent = gui.gui
+	MNF.BackgroundColor3 = Color3.fromRGB(21, 21, 21)
+	MNF.Size = UDim2.new(0.22, 0, 0.15, 0)
+	MNF.Position = UDim2.new(1, 0, 0.81, 0)
+	MNF.ZIndex = 0
+	UiCorner(MNF, 10)
+	local Texxl = Instance.new("TextLabel")
+	Texxl.Parent = MNF
+	Texxl.Size = UDim2.new(0.5, 0, 0.2, 0)
+	Texxl.Position = UDim2.new(0.5, 0, 0.05, 0)
+	Texxl.Text = Text or ""
+	Texxl.TextColor3 = Color3.fromRGB(239, 239, 239)
+	Texxl.TextScaled = true
+	Texxl.TextWrapped = true
+	Texxl.TextXAlignment = Enum.TextXAlignment.Left
+	Texxl.BackgroundTransparency = 1
+	Texxl.BorderSizePixel = 0
+	local Descrpt = Instance.new("TextLabel")
+	Descrpt.Parent = MNF
+	Descrpt.Size = UDim2.new(0.5, 0, 0.6, 0)
+	Descrpt.Position = UDim2.new(0.04, 0, 0.3, 0)
+	Descrpt.Text = TextTittle or ""
+	Descrpt.TextColor3 = Color3.fromRGB(239, 239, 239)
+	Descrpt.TextScaled = true
+	Descrpt.TextWrapped = true
+	Descrpt.TextXAlignment = Enum.TextXAlignment.Left
+	Descrpt.BackgroundTransparency = 1
+	Descrpt.BorderSizePixel = 0
+	if not TextTittle and Text then
+		Texxl.Size = UDim2.new(0.5, 0, 0.7, 0)
+		Texxl.Position = UDim2.new(0.05, 0, 0.05, 0)
+	end
+	if not Text and TextTittle then
+		Descrpt.Size = UDim2.new(0.5, 0, 0.7, 0)
+		Descrpt.Position = UDim2.new(0.05, 0, 0.05, 0)
+	end
+	local Imae = NewImage(MNF, Image)
+	Imae.Size = UDim2.new(0.3, 0, 0.75, 0)
+	Imae.Position = UDim2.new(0.65, 0, 0.125, 0)
+	Imae.Image = ""
+	local DI = Instance.new("Frame")
+	DI.Size = UDim2.new(1, 0, 0.07, 0)
+	DI.Position = UDim2.new(0, 0, 0.95, 0)
+	DI.Parent = MNF
+	DI.BorderSizePixel = 0
+	DI.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+	DI.ZIndex = 1
+	DI:TweenSize(UDim2.new(0, 0, 0.07, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, (Duration/2), false, function()
+		wait(1)
+		game:GetService("TweenService"):Create(MNF, TweenInfo.new(Duration/2), {BackgroundTransparency = 1, Position = UDim2.new(0.75, 0, 0.4, 0)}):Play()
+		game:GetService("TweenService"):Create(DI, TweenInfo.new(Duration/2), {BackgroundTransparency = 1}):Play()
+		game:GetService("TweenService"):Create(Texxl, TweenInfo.new(Duration/2), {TextTransparency = 1}):Play()
+		game:GetService("TweenService"):Create(Descrpt, TweenInfo.new(Duration/2), {TextTransparency = 1}):Play()
+		game:GetService("TweenService"):Create(Imae, TweenInfo.new(Duration/2), {ImageTransparency = 1}):Play()
+		wait(Duration/2)
+		MNF:Destroy()
+	end)
+	UiCorner(DI, 9999999)
+	MNF:TweenPosition(UDim2.new(0.75, 0, 0.72, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Back, 0.3, true)
+end
+
 function UiCorner(parent, Size)
 	local uic = Instance.new("UICorner")
 	uic.Parent = parent
