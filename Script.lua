@@ -133,7 +133,7 @@ UiCorner(gui.Framev1, 5)
 gui.Framev1.Parent = gui.gui
 gui.Framev1.Size = UDim2.new(0.15, 0, 0.1, 0)
 gui.Framev1.Draggable = true
-gui.Framev1.Position = UDim2.new(0.7, 0, 0.5, 0)
+gui.Framev1.Position = UDim2.new(0.25, 0, 0.25, 0)
 gui.Framev1.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
 gui.Framev1.Active = true
 gui.Framev1.Selectable = true
