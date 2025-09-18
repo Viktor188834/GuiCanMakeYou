@@ -40,6 +40,10 @@ function Guis:Notification(Table)
 	MNF.Size = UDim2.new(0.22, 0, 0.15, 0)
 	MNF.Position = UDim2.new(1, 0, 0.81, 0)
 	MNF.ZIndex = 0
+	if gui.gui:FindFirstChild("Notification") then
+		gui.gui:FindFirstChild("Notification"):Destroy()
+	end
+	MNF.Name = "Notification"
 	UiCorner(MNF, 10)
 	local Texxl = Instance.new("TextLabel")
 	Texxl.Parent = MNF
