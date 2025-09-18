@@ -63,6 +63,7 @@ function Guis:Notification(Table)
 	Descrpt.TextXAlignment = Enum.TextXAlignment.Left
 	Descrpt.BackgroundTransparency = 1
 	Descrpt.BorderSizePixel = 0
+	Descrpt.TextTransparency = 0.5
 	if not TextTittle and Text then
 		Texxl.Size = UDim2.new(0.5, 0, 0.7, 0)
 		Texxl.Position = UDim2.new(0.05, 0, 0.05, 0)
