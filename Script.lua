@@ -90,7 +90,7 @@ function Guis:Notification(Table)
 	DI.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
 	DI.ZIndex = 1
 	DI:TweenSize(UDim2.new(0, 0, 0.07, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, (Duration/2), false, function()
-		wait(1)
+		wait(Duration/5)
 		game:GetService("TweenService"):Create(MNF, TweenInfo.new(Duration/2), {BackgroundTransparency = 1, Position = UDim2.new(0.75, 0, 0.4, 0)}):Play()
 		game:GetService("TweenService"):Create(DI, TweenInfo.new(Duration/2), {BackgroundTransparency = 1}):Play()
 		game:GetService("TweenService"):Create(Texxl, TweenInfo.new(Duration/2), {TextTransparency = 1}):Play()
