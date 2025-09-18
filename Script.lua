@@ -104,9 +104,7 @@ function Guis:Notification(Table)
 		game:GetService("TweenService"):Create(DI, TweenInfo.new(Duration/2), {BackgroundTransparency = 1}):Play()
 		game:GetService("TweenService"):Create(Texxl, TweenInfo.new(Duration/2), {TextTransparency = 1}):Play()
 		game:GetService("TweenService"):Create(Descrpt, TweenInfo.new(Duration/2), {TextTransparency = 1}):Play()
-		if Imae then
-			game:GetService("TweenService"):Create(Imae, TweenInfo.new(Duration/2), {ImageTransparency = 1}):Play()
-		end
+		game:GetService("TweenService"):Create(Imae, TweenInfo.new(Duration/2), {ImageTransparency = 1}):Play()
 		wait(Duration/2)
 		MNF:Destroy()
 	end)
