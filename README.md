@@ -14,3 +14,5 @@ local Guis = loadstring(game:HttpGet("https://raw.githubusercontent.com/Viktor18
 --Guis:AddSection(Text)
 
 --Guis:TextAccuracy(Text, TextLabelOrTextButton) -- Acuracy Text
+
+--Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, TextOnMouseEnter)
