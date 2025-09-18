@@ -255,6 +255,9 @@ gui.Delete.MouseButton1Click:Connect(function()
 	if sound ~= nil then
 		sound:Destroy()
 	end
+	if Sound1 then
+		Sound1:Destroy()
+	end
 end)
 
 gui.Hide.MouseButton1Click:Connect(function()
