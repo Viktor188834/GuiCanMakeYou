@@ -39,6 +39,9 @@ local gui = {
 	Hide = Instance.new("TextButton")
 }
 
+local SectionRN = nil
+local Sections = {}
+
 function Guis:Notification(Table)
 	local Text = Table.Text
 	local TextTittle = Table.TextTittle
@@ -86,6 +89,7 @@ function Guis:Notification(Table)
 		Descrpt.Size = UDim2.new(0.5, 0, 0.7, 0)
 		Descrpt.Position = UDim2.new(0.05, 0, 0.05, 0)
 	end
+	local Imae = nil
 	if Image then
 		local Imae = NewImage(MNF, Image)
 		Imae.Size = UDim2.new(0.3, 0, 0.75, 0)
@@ -104,12 +108,22 @@ function Guis:Notification(Table)
 		game:GetService("TweenService"):Create(DI, TweenInfo.new(Duration/2), {BackgroundTransparency = 1}):Play()
 		game:GetService("TweenService"):Create(Texxl, TweenInfo.new(Duration/2), {TextTransparency = 1}):Play()
 		game:GetService("TweenService"):Create(Descrpt, TweenInfo.new(Duration/2), {TextTransparency = 1}):Play()
-		game:GetService("TweenService"):Create(Imae, TweenInfo.new(Duration/2), {ImageTransparency = 1}):Play()
+		if Imae then
+			game:GetService("TweenService"):Create(Imae, TweenInfo.new(Duration/2), {ImageTransparency = 1}):Play()
+		end
 		wait(Duration/2)
 		MNF:Destroy()
 	end)
 	UiCorner(DI, 9999999)
 	MNF:TweenPosition(UDim2.new(0.75, 0, 0.72, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Back, 0.3, true)
+end
+
+function ToSection(button)
+	for i,v in Sections do
+		if v.Find == SectionRN then
+			table.insert(v.InSection, button)
+		end
+	end
 end
 
 function UiCorner(parent, Size)
@@ -199,16 +213,9 @@ gui.gui.Enabled = true
 gui.uigridlayout.Parent = gui.ScrollingFrame1
 gui.uigridlayout.CellSize = UDim2.new(0.75, 0, 0, 40)
 gui.uigridlayout.SortOrder = Enum.SortOrder.LayoutOrder
-gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.ScrollingFrame1.UIGridLayout.AbsoluteContentSize.Y)
 gui.ScrollingFrame1.ScrollBarImageTransparency = 1
 
-gui.ScrollingFrame1.ChildAdded:Connect(function()
-	wait(0.1)
-	gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.uigridlayout.AbsoluteContentSize.Y)
-end)
-
-gui.ScrollingFrame1.ChildRemoved:Connect(function()
-	wait(0.1)
+game:GetService("RunService").Heartbeat:Connect(function()
 	gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.uigridlayout.AbsoluteContentSize.Y)
 end)
 
@@ -221,7 +228,6 @@ gui.Framev1.Position = UDim2.new(0.25, 0, 0.25, 0)
 gui.Framev1.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
 gui.Framev1.Active = true
 gui.Framev1.Selectable = true
-gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.ScrollingFrame1.UIGridLayout.AbsoluteContentSize.Y)
 gui.ScrollingFrame1.Parent = gui.Framev1
 gui.ScrollingFrame1.Size = UDim2.new(1, 0, 3, 0)
 gui.ScrollingFrame1.Position = UDim2.new(0, 0, 0.5, 0)
@@ -285,6 +291,7 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 	button.RichText = true
 	button.TextWrapped = true
 	button.TextScaled = true
+	ToSection(button)
 	button.AutoButtonColor = false
 	button.TextXAlignment = Enum.TextXAlignment.Left
 	UiCorner(button, 3)
@@ -342,6 +349,7 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 	button.TextScaled = true
 	button.RichText = true
 	UiCorner(button, 3)
+	ToSection(button)
 	-- functions<<
 	button.Focused:Connect(function()
 		ClickSound()
@@ -397,6 +405,7 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	button.TextWrapped = true
 	button.TextScaled = true
 	button.AutoButtonColor = false
+	ToSection(button)
 	local Textt = Instance.new("TextLabel")
 	Textt.Parent = button
 	Textt.Text = Text
@@ -484,6 +493,7 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 	button.TextWrapped = true
 	button.TextScaled = true
 	button.AutoButtonColor = false
+	ToSection(button)
 	UiCorner(button, 3)
 	local image = NewImage(button, "rbxassetid://71459514973341")
 	local keycodee = Instance.new("TextLabel")
@@ -510,6 +520,7 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 	end)
 	uis.InputBegan:Connect(function(i, g)
 		if EnabledKeyBinds == false then return end
+		if button.Visible == false then return end
 		if g then return end
 		if i.KeyCode == Keybind then
 			fun()
@@ -585,6 +596,7 @@ function Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, Tex
 	local keycodee = Instance.new("TextLabel")
 	keycodee.Parent = image
 	keycodee.Text = Keybind.Name
+	ToSection(button)
 	keycodee.Size = UDim2.new(0.25, 0, 0.25, 0)
 	keycodee.TextWrapped = true
 	keycodee.TextScaled = true
@@ -626,6 +638,7 @@ function Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, Tex
 	uis.InputBegan:Connect(function(i, g)
 		if EnabledKeyBinds == false then return end
 		if g then return end
+		if button.Visible == false then return end
 		if i.KeyCode == Keybind then
 			D()
 		end
@@ -665,17 +678,47 @@ function Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, Tex
 end
 
 function Guis:AddSection(Text)
-	local TextLabel = Instance.new("TextLabel")
+	local TextLabel = Instance.new("TextButton")
+	local clr = 21
 	TextLabel.Parent = gui.ScrollingFrame1
-	TextLabel.BorderSizePixel = 0
-	TextLabel.BackgroundTransparency = 1
+	TextLabel.BackgroundColor3 = Color3.fromRGB(clr, clr, clr)
 	TextLabel.TextColor3 = Color3.fromRGB(232, 232, 232)
 	TextLabel.Text = Text
+	TextLabel.Name = Text
 	TextLabel.TextScaled = true
 	TextLabel.TextWrapped = true
 	TextLabel.RichText = true
+	TextLabel.AutoButtonColor = false
+	local img = NewImage(TextLabel, "rbxassetid://278543076")
+	img.Size = UDim2.new(0.25, 0, 1, 0)
+	img.Position = UDim2.new(1, 0, 0, 0)
+	UiCorner(TextLabel, 5)
+	SectionRN = Text
+	local Table = {Find = Text, InSection = {}}
+	table.insert(Sections, Table)
+	local e = false
+	local Rot = 0
+	TextLabel.MouseButton1Click:Connect(function()
+		ClickSound()
+		for i, v in Table.InSection do
+			if v then
+				v.Visible = not v.Visible
+			end
+		end
+		e = not e
+		if e == true then
+			clr = 17
+		else
+			clr = 21
+		end
+		TextLabel.BackgroundColor3 = Color3.fromRGB(clr, clr, clr)
+		Rot += 180
+		img.Rotation = Rot
+	end)
 	return TextLabel
 end
+
+
 
 local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
 
@@ -719,6 +762,7 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 	SFv2.Size = UDim2.new(1, 0, 0, 0)
 	SFv2.CanvasSize = UDim2.new(0, 0, 0, 0)
 	SFv2.Visible = false
+	ToSection(button)
 	SFv2.Position = UDim2.new(1, 0, 0, 0)
 	SFv2.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
 	SFv2.ScrollBarImageTransparency = 1
@@ -807,6 +851,150 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 		end)
 	end
 	return button
+end
+
+function Guis:AddSliderButton(MaxValue, Text, FunctionWithNumber, TextOnMouseEnter)
+	local button = Instance.new("TextButton")
+	button.Text = ""
+	button.Name = Text
+	button.Parent = gui.ScrollingFrame1
+	button.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+	button.BackgroundTransparency = 1
+	button.TextYAlignment = Enum.TextYAlignment.Bottom
+	button.TextColor3 = Color3.fromRGB(239, 239, 239)
+	button.RichText = true
+	button.TextWrapped = true
+	button.TextScaled = true
+	button.AutoButtonColor = false
+	ToSection(button)
+	local MainSlide = Instance.new("Frame")
+	MainSlide.Parent = button
+	MainSlide.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
+	MainSlide.Size = UDim2.new(1, 0, 0.25, 0)
+	MainSlide.BorderSizePixel = 0
+	MainSlide.Position = UDim2.new(0, 0, 0.2, 0)
+	local TextLabel = Instance.new("TextLabel")
+	TextLabel.Parent = button
+	TextLabel.Text = Text
+	TextLabel.TextWrapped = true
+	TextLabel.TextScaled = true
+	TextLabel.BackgroundTransparency = 1
+	TextLabel.Size = UDim2.new(0.5, 0, 0.5, 0)
+	TextLabel.Position = UDim2.new(0.25, 0, 0.5, 0)
+	TextLabel.TextColor3 = Color3.fromRGB(239, 239, 239)
+	local arg1 = Instance.new("Frame")
+	arg1.Parent = MainSlide
+	arg1.BackgroundColor3 = Color3.fromRGB(218, 218, 218)
+	arg1.Size = UDim2.new(0, (MainSlide.AbsoluteSize.Y*2), 0, (MainSlide.AbsoluteSize.Y*2))
+	arg1.Position = UDim2.new(0, 0, 0, (-MainSlide.AbsoluteSize.Y/2))
+	local text1 = Instance.new("TextLabel")
+	text1.Parent = arg1
+	text1.Position = UDim2.new(0, 0, -1, 0)
+	text1.BorderSizePixel = 0
+	text1.Size = UDim2.new(1, 0, 1, 0)
+	text1.TextWrapped = true
+	text1.TextScaled = true
+	text1.BackgroundTransparency = 1
+	text1.TextColor3 = Color3.fromRGB(240, 240, 240)
+	local text2 = Instance.new("TextLabel")
+	text2.Parent = MainSlide
+	text2.Position = UDim2.new(0, 0, 0.9, 0)
+	text2.BorderSizePixel = 0
+	text2.Size = UDim2.new(0.25, 0, 2, 0)
+	text2.TextWrapped = true
+	text2.TextScaled = true
+	text2.BackgroundTransparency = 1
+	text2.TextColor3 = Color3.fromRGB(240, 240, 240)
+	text2.Text = tostring(0)
+	local text3 = Instance.new("TextLabel")
+	text3.Parent = MainSlide
+	text3.Position = UDim2.new(0.75, 0, 0.9, 0)
+	text3.BorderSizePixel = 0
+	text3.Size = UDim2.new(0.25, 0, 2, 0)
+	text3.TextWrapped = true
+	text3.TextScaled = true
+	text3.BackgroundTransparency = 1
+	text3.TextColor3 = Color3.fromRGB(240, 240, 240)
+	text3.Text = tostring(MaxValue)
+	UiCorner(button, 5)
+	UiCorner(MainSlide, 9999)
+	UiCorner(arg1, 9999)
+	local function GetProcents()
+		local a = math.floor(((math.floor((math.floor(((mouse.X - MainSlide.AbsolutePosition.X) / MainSlide.AbsoluteSize.X)*1000)/10)*100)/100)/100*MaxValue)*100)/100
+		local spl = string.split(a, ".")
+		local ToReturn = spl[1]
+		return tostring(ToReturn)
+	end
+	text1.Text = GetProcents()
+	local clk1 = false
+	local clk2 = false
+	button.MouseButton1Down:Connect(function()
+		clk1 = true
+		repeat
+			text1.Text = GetProcents()
+			arg1.Position = UDim2.new(0, (mouse.X - MainSlide.AbsolutePosition.X), -0.5, 0)
+			local ToFunction = (math.floor((math.floor(((mouse.X - MainSlide.AbsolutePosition.X) / MainSlide.AbsoluteSize.X)*1000)/10)*100)/100)/100*MaxValue
+			if tonumber(ToFunction) > MaxValue then
+				ToFunction = MaxValue
+				text1.Text = tostring(MaxValue)
+				arg1.Position = UDim2.new(1, 0, -0.5, 0)
+			elseif tonumber(ToFunction) < 0 then
+				ToFunction = 0
+				arg1.Position = UDim2.new(0, 0, -0.5, 0)
+				text1.Text = "0"
+			end
+			FunctionWithNumber(tonumber(ToFunction))
+			game:GetService("RunService").Heartbeat:Wait()
+		until clk1 == false
+	end)
+	game:GetService("RunService").Heartbeat:Connect(function()
+		if clk2 == false then
+			clk1 = false
+		end
+	end)
+	button.MouseEnter:Connect(function()
+		clk2 = true
+	end)
+	button.MouseLeave:Connect(function()
+		clk2 = false
+	end)
+	mouse.Button1Up:Connect(function()
+		clk1 = false
+	end)
+	button.MouseButton1Up:Connect(function()
+		clk1 = false
+	end)
+	local mousetext = nil
+	if TextOnMouseEnter then
+		local offsetX = #string.split(TextOnMouseEnter, "")*15
+		button.MouseEnter:Connect(function(x, y)
+			local MouseText = Instance.new("TextLabel")
+			mousetext = MouseText
+			MouseText.Parent = gui.gui
+			MouseText.BorderSizePixel = 0
+			MouseText.TextWrapped = true
+			MouseText.ZIndex = 1000
+			MouseText.TextScaled = true
+			UiCorner(MouseText, 1)
+			MouseText.Text = TextOnMouseEnter
+			MouseText.TextColor3 = Color3.fromRGB(239, 239, 239)
+			MouseText.Size = UDim2.new(0, offsetX, 0, 0)
+			MouseText:TweenSize(UDim2.new(0, offsetX, 0.05, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+			MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			MouseText.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+			game:GetService("Debris"):AddItem(MouseText, 5)
+			mouse.Move:Connect(function()
+				MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			end)
+		end)
+		button.MouseLeave:Connect(function()
+			if mousetext then
+				mousetext:TweenSize(UDim2.new(0, offsetX, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+				game:GetService("Debris"):AddItem(mousetext, 0.31)
+			end
+			mousetext = nil
+		end)
+	end
 end
 
 return Guis
