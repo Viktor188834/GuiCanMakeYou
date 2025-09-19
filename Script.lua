@@ -5,6 +5,7 @@ local mouse = plr:GetMouse()
 local hidded = false
 local EnabledKeyBinds = true
 local DeveloperName = "gondonmev1488"
+local run = game:GetService("RunService")
 
 local Guis = {}
 
@@ -36,8 +37,10 @@ local gui = {
 	uigridlayout = Instance.new("UIGridLayout"),
 	TextV1 = Instance.new("TextBox"),
 	Delete = Instance.new("TextButton"),
-	Hide = Instance.new("TextButton")
+	Hide = Instance.new("TextButton"),
 }
+
+gui.gui:SetAttribute("BackgroundTransparency", 0)
 
 local SectionRN = nil
 local Sections = {}
@@ -215,7 +218,7 @@ gui.uigridlayout.CellSize = UDim2.new(0.75, 0, 0, 40)
 gui.uigridlayout.SortOrder = Enum.SortOrder.LayoutOrder
 gui.ScrollingFrame1.ScrollBarImageTransparency = 1
 
-game:GetService("RunService").Heartbeat:Connect(function()
+run.Heartbeat:Connect(function()
 	gui.ScrollingFrame1.CanvasSize = UDim2.new(0, 0, 0, gui.uigridlayout.AbsoluteContentSize.Y)
 end)
 
@@ -264,15 +267,17 @@ gui.Delete.MouseButton1Click:Connect(function()
 	end
 end)
 
+local sTween = nil
 gui.Hide.MouseButton1Click:Connect(function()
 	if hidded == false then
-		gui.Framev1:TweenSize(UDim2.new(0.15, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3, false, function()
+		sTween = gui.Framev1.AbsoluteSize.Y
+		gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3, false, function()
 			gui.Framev1.Visible = false
 			hidded = true
 		end)
 	else
 		gui.Framev1.Visible = true
-		gui.Framev1:TweenSize(UDim2.new(0.15, 0, 0.1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3, false, function()
+		gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X, 0, sTween), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3, false, function()
 			hidded = false
 		end)
 	end
@@ -298,6 +303,12 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 	local image = NewImage(button, "rbxassetid://16081386298")
 	image.Size = UDim2.new(0.25, 0, 1, 0)
 	image.Position = UDim2.new(1, 0, 0, 0)
+	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
+		local Value = gui.gui:GetAttribute("BackgroundTransparency")
+		button.BackgroundTransparency = Value
+		image.ImageTransparency = Value
+		button.TextTransparency = Value
+	end)
 	-- functions<<
 	button.MouseButton1Click:Connect(function()
 		ClickSound()
@@ -348,6 +359,11 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 	button.TextWrapped = true
 	button.TextScaled = true
 	button.RichText = true
+	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
+		local Value = gui.gui:GetAttribute("BackgroundTransparency")
+		button.BackgroundTransparency = Value
+		button.TextTransparency = Value
+	end)
 	UiCorner(button, 3)
 	ToSection(button)
 	-- functions<<
@@ -423,6 +439,12 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	UiCorner(Slide, 9999)
 	Slide.Size = UDim2.new(0.25, 0, 0.9, 0)
 	Slide.Position = UDim2.new(0.01, 0, 0.05, 0)
+	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
+		local Value = gui.gui:GetAttribute("BackgroundTransparency")
+		button.BackgroundTransparency = Value
+		Slide.BackgroundTransparency = Value
+		Textt.TextTransparency = Value
+	end)
 	-- functions<<
 	local En = false
 	local coldown = false
@@ -496,6 +518,12 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 	ToSection(button)
 	UiCorner(button, 3)
 	local image = NewImage(button, "rbxassetid://71459514973341")
+	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
+		local Value = gui.gui:GetAttribute("BackgroundTransparency")
+		button.BackgroundTransparency = Value
+		button.TextTransparency = Value
+		image.ImageTransparency = Value
+	end)
 	local keycodee = Instance.new("TextLabel")
 	keycodee.Parent = image
 	keycodee.Text = Keybind.Name
@@ -605,6 +633,12 @@ function Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, Tex
 	keycodee.Position = UDim2.new(0.5, 0, 0.5, 0)
 	image.Size = UDim2.new(0.25, 0, 1, 0)
 	image.Position = UDim2.new(1, 0, 0, 0)
+	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
+		local Value = gui.gui:GetAttribute("BackgroundTransparency")
+		button.BackgroundTransparency = Value
+		Textt.TextTransparency = Value
+		image.ImageTransparency = Value
+	end)
 	local En = false
 	local coldown = false
 	local Activated = false
@@ -698,6 +732,12 @@ function Guis:AddSection(Text)
 	table.insert(Sections, Table)
 	local e = false
 	local Rot = 0
+	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
+		local Value = gui.gui:GetAttribute("BackgroundTransparency")
+		TextLabel.BackgroundTransparency = Value
+		TextLabel.TextTransparency = Value
+		img.ImageTransparency = Value
+	end)
 	TextLabel.MouseButton1Click:Connect(function()
 		ClickSound()
 		for i, v in Table.InSection do
@@ -730,13 +770,14 @@ uis.InputBegan:Connect(function(i, g)
 	if g then return end
 	if i.KeyCode == Enum.KeyCode.K then
 		if hidded == false then
-			gui.Framev1:TweenSize(UDim2.new(0.15, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3, false, function()
+			sTween = gui.Framev1.AbsoluteSize.Y
+			gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3, false, function()
 				gui.Framev1.Visible = false
 				hidded = true
 			end)
 		else
 			gui.Framev1.Visible = true
-			gui.Framev1:TweenSize(UDim2.new(0.15, 0, 0.1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3, false, function()
+			gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X, 0, sTween), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3, false, function()
 				hidded = false
 			end)
 		end
@@ -766,6 +807,12 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 	SFv2.Position = UDim2.new(1, 0, 0, 0)
 	SFv2.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
 	SFv2.ScrollBarImageTransparency = 1
+	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
+		local Value = gui.gui:GetAttribute("BackgroundTransparency")
+		button.BackgroundTransparency = Value
+		button.TextTransparency = Value
+		image.ImageTransparency = Value
+	end)
 	local uigridLayoutv1 = Instance.new("UIGridLayout")
 	uigridLayoutv1.Parent = SFv2
 	uigridLayoutv1.CellSize = UDim2.new(0.95, 0, 0, 25)
@@ -795,11 +842,9 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 		end
 	end
 	SFv2.ChildAdded:Connect(function()
-		wait(0.1)
 		SFv2.CanvasSize = UDim2.new(0, 0, 0, uigridLayoutv1.AbsoluteContentSize.Y)
 	end)
 	SFv2.ChildRemoved:Connect(function()
-		wait(0.1)
 		SFv2.CanvasSize = UDim2.new(0, 0, 0, uigridLayoutv1.AbsoluteContentSize.Y)
 	end)
 	UiCorner(SFv2, 5)
@@ -998,5 +1043,23 @@ function Guis:AddSliderButton(MaxValue, Text, FunctionWithNumber, TextOnMouseEnt
 		end)
 	end
 end
+
+Guis:AddSection("Gui Settings")
+
+Guis:AddSliderButton(1, "Background Transparency", function(V)
+	gui.gui:SetAttribute("BackgroundTransparency", V)
+end)
+
+Guis:AddClickButton("increase gui", function()
+	gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X+10, 0, gui.Framev1.AbsoluteSize.Y+10), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5, true, function()
+		Guis:Notification({Text = "Done!", Duration = 2})
+	end)
+end)
+
+Guis:AddClickButton("reduce gui", function()
+	gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X-10, 0, gui.Framev1.AbsoluteSize.Y-10), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5, true, function()
+		Guis:Notification({Text = "Done!", Duration = 2})
+	end)
+end)
 
 return Guis
