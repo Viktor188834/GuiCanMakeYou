@@ -728,7 +728,7 @@ end)
 
 uis.InputBegan:Connect(function(i, g)
 	if g then return end
-	if i.KeyCode == Enum.KeyCode.G then
+	if i.KeyCode == Enum.KeyCode.K then
 		if hidded == false then
 			gui.Framev1:TweenSize(UDim2.new(0.15, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3, false, function()
 				gui.Framev1.Visible = false
