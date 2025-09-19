@@ -795,9 +795,11 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 		end
 	end
 	SFv2.ChildAdded:Connect(function()
+		wait(0.1)
 		SFv2.CanvasSize = UDim2.new(0, 0, 0, uigridLayoutv1.AbsoluteContentSize.Y)
 	end)
 	SFv2.ChildRemoved:Connect(function()
+		wait(0.1)
 		SFv2.CanvasSize = UDim2.new(0, 0, 0, uigridLayoutv1.AbsoluteContentSize.Y)
 	end)
 	UiCorner(SFv2, 5)
