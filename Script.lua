@@ -306,8 +306,6 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
 		local Value = gui.gui:GetAttribute("BackgroundTransparency")
 		button.BackgroundTransparency = Value
-		image.ImageTransparency = Value
-		button.TextTransparency = Value
 	end)
 	-- functions<<
 	button.MouseButton1Click:Connect(function()
@@ -362,7 +360,6 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
 		local Value = gui.gui:GetAttribute("BackgroundTransparency")
 		button.BackgroundTransparency = Value
-		button.TextTransparency = Value
 	end)
 	UiCorner(button, 3)
 	ToSection(button)
@@ -442,8 +439,6 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
 		local Value = gui.gui:GetAttribute("BackgroundTransparency")
 		button.BackgroundTransparency = Value
-		Slide.BackgroundTransparency = Value
-		Textt.TextTransparency = Value
 	end)
 	-- functions<<
 	local En = false
@@ -521,8 +516,6 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
 		local Value = gui.gui:GetAttribute("BackgroundTransparency")
 		button.BackgroundTransparency = Value
-		button.TextTransparency = Value
-		image.ImageTransparency = Value
 	end)
 	local keycodee = Instance.new("TextLabel")
 	keycodee.Parent = image
@@ -636,8 +629,6 @@ function Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, Tex
 	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
 		local Value = gui.gui:GetAttribute("BackgroundTransparency")
 		button.BackgroundTransparency = Value
-		Textt.TextTransparency = Value
-		image.ImageTransparency = Value
 	end)
 	local En = false
 	local coldown = false
@@ -711,21 +702,23 @@ function Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, Tex
 	return button
 end
 
-function Guis:AddSection(Text)
+function Guis:AddSection(Text, Image)
 	local TextLabel = Instance.new("TextButton")
 	local clr = 21
 	TextLabel.Parent = gui.ScrollingFrame1
 	TextLabel.BackgroundColor3 = Color3.fromRGB(clr, clr, clr)
 	TextLabel.TextColor3 = Color3.fromRGB(232, 232, 232)
-	TextLabel.Text = Text
+	TextLabel.Text = "| "..Text.." |"
 	TextLabel.Name = Text
 	TextLabel.TextScaled = true
 	TextLabel.TextWrapped = true
 	TextLabel.RichText = true
 	TextLabel.AutoButtonColor = false
-	local img = NewImage(TextLabel, "rbxassetid://278543076")
-	img.Size = UDim2.new(0.25, 0, 1, 0)
-	img.Position = UDim2.new(1, 0, 0, 0)
+	if Image then
+		local img = NewImage(TextLabel, Image)
+		img.Size = UDim2.new(0.25, 0, 1, 0)
+		img.Position = UDim2.new(1, 0, 0, 0)
+	end
 	UiCorner(TextLabel, 5)
 	SectionRN = Text
 	local Table = {Find = Text, InSection = {}}
@@ -735,8 +728,6 @@ function Guis:AddSection(Text)
 	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
 		local Value = gui.gui:GetAttribute("BackgroundTransparency")
 		TextLabel.BackgroundTransparency = Value
-		TextLabel.TextTransparency = Value
-		img.ImageTransparency = Value
 	end)
 	TextLabel.MouseButton1Click:Connect(function()
 		ClickSound()
@@ -752,8 +743,6 @@ function Guis:AddSection(Text)
 			clr = 21
 		end
 		TextLabel.BackgroundColor3 = Color3.fromRGB(clr, clr, clr)
-		Rot += 180
-		img.Rotation = Rot
 	end)
 	return TextLabel
 end
@@ -810,8 +799,6 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
 		local Value = gui.gui:GetAttribute("BackgroundTransparency")
 		button.BackgroundTransparency = Value
-		button.TextTransparency = Value
-		image.ImageTransparency = Value
 	end)
 	local uigridLayoutv1 = Instance.new("UIGridLayout")
 	uigridLayoutv1.Parent = SFv2
@@ -1051,14 +1038,14 @@ Guis:AddSliderButton(1, "Background Transparency", function(V)
 end)
 
 Guis:AddClickButton("increase gui", function()
-	gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X+10, 0, gui.Framev1.AbsoluteSize.Y+10), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5, true, function()
-		Guis:Notification({Text = "Done!", Duration = 2})
+	gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X+10, 0, gui.Framev1.AbsoluteSize.Y+10), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 1, true, function()
+		Guis:Notification({Text = "Done! Size Now: "..tostring(math.floor(gui.Framev1.AbsoluteSize.Y*100)/100)..", "..tostring(math.floor(gui.Framev1.AbsoluteSize.X*100)/100), Duration = 2})
 	end)
 end)
 
 Guis:AddClickButton("reduce gui", function()
-	gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X-10, 0, gui.Framev1.AbsoluteSize.Y-10), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5, true, function()
-		Guis:Notification({Text = "Done!", Duration = 2})
+	gui.Framev1:TweenSize(UDim2.new(0, gui.Framev1.AbsoluteSize.X-10, 0, gui.Framev1.AbsoluteSize.Y-10), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 1, true, function()
+		Guis:Notification({Text = "Done! Size Now: "..tostring(math.floor(gui.Framev1.AbsoluteSize.Y*100)/100)..", "..tostring(math.floor(gui.Framev1.AbsoluteSize.X*100)/100), Duration = 2})
 	end)
 end)
 
