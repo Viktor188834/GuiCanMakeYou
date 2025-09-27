@@ -543,7 +543,6 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 		if EnabledKeyBinds == false then return end
 		if button.Visible == false then return end
 		if g then return end
-		if hidded == true then return end
 		if i.KeyCode == Keybind then
 			fun()
 		end
@@ -664,7 +663,6 @@ function Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, Tex
 	uis.InputBegan:Connect(function(i, g)
 		if EnabledKeyBinds == false then return end
 		if g then return end
-		if hidded == true then return end
 		if button.Visible == false then return end
 		if i.KeyCode == Keybind then
 			D()
