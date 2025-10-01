@@ -1031,6 +1031,145 @@ function Guis:AddSliderButton(MaxValue, Text, FunctionWithNumber, TextOnMouseEnt
 	end
 end
 
+local Styles = {
+	Vikt1 = Color3.fromRGB(255, 38, 38),
+	Vikt2 = Color3.fromRGB(108, 255, 75),
+	Vikt3 = Color3.fromRGB(62, 62, 255),
+	Vikt4 = Color3.fromRGB(255, 232, 60),
+	Vikt5 = Color3.fromRGB(176, 120, 30),
+	Vikt6 = Color3.fromRGB(255, 90, 241),
+	Vikt7 = Color3.fromRGB(62, 252, 255),
+	Vikt8 = Color3.fromRGB(149, 62, 255)
+}
+
+local StylesPosition = {
+	Vikt1 = UDim2.new(0, 0, 0, 0),
+	Vikt2 = UDim2.new(0, 0, -3, 0),
+	Vikt3 = UDim2.new(0, 0, 3, 0),
+	Vikt4 = UDim2.new(-1, 0, 0, 0),
+	Vikt5 = UDim2.new(1, 0, 0, 0),
+	Vikt6 = UDim2.new(1, 0, -3, 0),
+	Vikt7 = UDim2.new(1, 0, 3, 0),
+	Vikt8 = UDim2.new(-1, 0, 3, 0),
+	Vikt9 = UDim2.new(-1, 0, -3, 0),
+}
+
+function Guis:SelectButtons(Text, ScrollingFrameStyle, TextOnMouseEnter, ScrollingFramePositionStyle, ButtonsTable)
+	-- buttons is {{ButtonName, ExclusiveFunction}, {ButtonName, ExclusiveFunction}}
+	local button = Instance.new("TextButton")
+	button.Text = Text
+	button.Name = Text
+	button.Parent = gui.ScrollingFrame1
+	button.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+	button.TextColor3 = Color3.fromRGB(239, 239, 239)
+	button.RichText = true
+	button.TextWrapped = true
+	button.TextScaled = true
+	button.AutoButtonColor = false
+	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
+		local Value = gui.gui:GetAttribute("BackgroundTransparency")
+		button.BackgroundTransparency = Value
+	end)
+	local Pos = UDim2.new(1, 0, 0, 0)
+	for i,v in StylesPosition do
+		if i == ScrollingFramePositionStyle then
+			Pos = v
+		end
+	end
+	local SFv2 = Instance.new("ScrollingFrame")
+	SFv2.Parent = gui.Framev1
+	SFv2.Size = UDim2.new(1, 0, 0, 0)
+	SFv2.CanvasSize = UDim2.new(0, 0, 0, 0)
+	SFv2.Visible = false
+	ToSection(button)
+	SFv2.Position = Pos
+	SFv2.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+	SFv2.ScrollBarImageTransparency = 1
+	local uigridLayoutv1 = Instance.new("UIGridLayout")
+	uigridLayoutv1.Parent = SFv2
+	uigridLayoutv1.CellSize = UDim2.new(0.95, 0, 0, 25)
+	uigridLayoutv1.CellPadding = UDim2.new(0, 5, 0, 5)
+	SFv2.CanvasSize = UDim2.new(0, 0, 0, uigridLayoutv1.AbsoluteContentSize.Y)
+	UiCorner(SFv2, 5)
+	UiCorner(button, 5)
+	local cd = false
+	button.MouseButton1Click:Connect(function()
+		if cd == true then return end
+		ClickSound()
+		if SFv2.Visible == false then
+			SFv2.Visible = true
+			SFv2:TweenSize(UDim2.new(1, 0, 3.5, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5, false, function()
+				cd = false
+			end)
+		else
+			SFv2:TweenSize(UDim2.new(1, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5, false, function()
+				cd = false
+				SFv2.Visible = false
+			end)
+		end
+	end)
+	local mousetext = nil
+	if TextOnMouseEnter then
+		local offsetX = #string.split(TextOnMouseEnter, "")*15
+		button.MouseEnter:Connect(function(x, y)
+			local MouseText = Instance.new("TextLabel")
+			mousetext = MouseText
+			MouseText.Parent = gui.gui
+			MouseText.BorderSizePixel = 0
+			MouseText.TextWrapped = true
+			MouseText.ZIndex = 1000
+			MouseText.TextScaled = true
+			UiCorner(MouseText, 1)
+			MouseText.Text = TextOnMouseEnter
+			MouseText.TextColor3 = Color3.fromRGB(239, 239, 239)
+			MouseText.Size = UDim2.new(0, offsetX, 0, 0)
+			MouseText:TweenSize(UDim2.new(0, offsetX, 0.05, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+			MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			MouseText.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+			game:GetService("Debris"):AddItem(MouseText, 5)
+			mouse.Move:Connect(function()
+				MouseText.Position = UDim2.new(0, mouse.X+5, 0, mouse.Y)
+			end)
+		end)
+		button.MouseLeave:Connect(function()
+			if mousetext then
+				mousetext:TweenSize(UDim2.new(0, offsetX, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.3)
+				game:GetService("Debris"):AddItem(mousetext, 0.31)
+			end
+			mousetext = nil
+		end)
+	end
+	local Color = Color3.fromRGB(65, 65, 65)
+	for i,v in Styles do
+		if i == ScrollingFrameStyle then
+			Color = v
+		end
+	end
+	-- buttons is {{ButtonName, ExclusiveFunction}, {ButtonName, ExclusiveFunction}}
+	for i,v in ButtonsTable do
+		local ButtonName = v.ButtonName or v[1]
+		local ExclusiveFunction = v.ExclusiveFunction or v[2]
+		local butt = Instance.new('TextButton')
+		butt.Parent = SFv2
+		butt.TextColor3 = Color3.fromRGB(232, 232, 232)
+		butt.Text = ButtonName
+		butt.BackgroundColor3 = Color
+		butt.TextScaled = true
+		butt.TextWrapped = true
+		butt.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+		butt.TextStrokeTransparency = 0
+		butt.MouseButton1Click:Connect(function()
+			SFv2:TweenSize(UDim2.new(1, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.1, false, function()
+				cd = false
+				SFv2.Visible = false
+			end)
+			ExclusiveFunction()
+		end)
+		UiCorner(butt, 5)
+	end
+	return button
+end
+
 Guis:AddSection("Gui Settings")
 
 Guis:AddSliderButton(1, "Background Transparency", function(V)
