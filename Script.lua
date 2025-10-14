@@ -1,14 +1,14 @@
-local uis = game:GetService("UserInputService")
 local Enabled = true
 local plr = game.Players.LocalPlayer
+local uis = game:GetService("UserInputService")
 local mouse = plr:GetMouse()
 local hidded = false
 local EnabledKeyBinds = true
 local DeveloperName = "gondonmev1488"
 local run = game:GetService("RunService")
-
+local SectionRN = nil
+local Sections = {}
 local Guis = {}
-
 function WaitForIsA(parent, ClassName, MaxTime)
 	MaxTime = MaxTime or 10
 	local StartTime = os.clock()
@@ -19,17 +19,6 @@ function WaitForIsA(parent, ClassName, MaxTime)
 		wait()
 	end
 end
-
-function NewImage(parent, Image)
-	local image = Instance.new("ImageLabel")
-	image.Parent = parent
-	image.Image = Image
-	image.Active = false
-	image.BackgroundTransparency = 1
-	repeat wait() image.Image = Image until image.Image == Image
-	return image
-end
-
 local gui = {
 	gui = Instance.new("ScreenGui", game:GetService("CoreGui") or WaitForIsA(plr, "PlayerGui")),
 	Framev1 = Instance.new("Frame"),
@@ -39,11 +28,6 @@ local gui = {
 	Delete = Instance.new("TextButton"),
 	Hide = Instance.new("TextButton"),
 }
-
-gui.gui:SetAttribute("BackgroundTransparency", 0)
-
-local SectionRN = nil
-local Sections = {}
 
 function Guis:Notification(Table)
 	local Text = Table.Text
@@ -121,13 +105,61 @@ function Guis:Notification(Table)
 	MNF:TweenPosition(UDim2.new(0.75, 0, 0.72, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Back, 0.3, true)
 end
 
-function ToSection(button)
-	for i,v in Sections do
-		if v.Find == SectionRN then
-			table.insert(v.InSection, button)
+local function con(Once_function)
+	run.Heartbeat:Once(function()
+		Once_function()
+	end)
+end
+
+local function Warn(Text, Mini)
+	warn(Text)
+	Guis:Notification({Text = Text, Image = 1764960410, Duration = 4.5, TextTittle = Mini})
+end
+
+function GetSectionService()
+	local SectionService = {}
+	function SectionService.insert(button: Instance)
+		for i,v in Sections do
+			if v[1] == SectionRN then
+				table.insert(v[2], button)
+			end
 		end
 	end
+	function SectionService.new(Text: string)
+		SectionRN = Text
+		local Table = {Text, {}}
+		table.insert(Sections, Table)
+		return Table
+	end
+	function SectionService.active(Name: string)
+		local Succes = false
+		for i,v in Sections do
+			if v[1] == Name then
+				Succes = true
+				for i,button in v[2] do
+					button.Visible = not button.Visible
+				end
+			end
+		end
+		if not Succes then
+			Warn("Failed", "Sections Not Finded")
+		end
+	end
+	return SectionService
 end
+local SectionService = GetSectionService()
+
+function NewImage(parent, Image)
+	local image = Instance.new("ImageLabel")
+	image.Parent = parent
+	image.Image = Image
+	image.Active = false
+	image.BackgroundTransparency = 1
+	repeat wait() image.Image = Image until image.Image == Image
+	return image
+end
+
+gui.gui:SetAttribute("BackgroundTransparency", 0)
 
 function UiCorner(parent, Size)
 	local uic = Instance.new("UICorner")
@@ -296,7 +328,7 @@ function Guis:AddClickButton(Text, fun, TextOnMouseEnter)
 	button.RichText = true
 	button.TextWrapped = true
 	button.TextScaled = true
-	ToSection(button)
+	SectionService.insert(button)
 	button.AutoButtonColor = false
 	button.TextXAlignment = Enum.TextXAlignment.Left
 	UiCorner(button, 3)
@@ -362,7 +394,7 @@ function Guis:AddTextBox(Text, funWithText, TextOnMouseEnter)
 		button.BackgroundTransparency = Value
 	end)
 	UiCorner(button, 3)
-	ToSection(button)
+	SectionService.insert(button)
 	-- functions<<
 	button.Focused:Connect(function()
 		ClickSound()
@@ -418,7 +450,7 @@ function Guis:AddSlideButton(Text, functionOn, functionOff, TextOnMouseEnter)
 	button.TextWrapped = true
 	button.TextScaled = true
 	button.AutoButtonColor = false
-	ToSection(button)
+	SectionService.insert(button)
 	local Textt = Instance.new("TextLabel")
 	Textt.Parent = button
 	Textt.Text = Text
@@ -510,7 +542,7 @@ function Guis:AddKeybind(Text, fun, StarterKeybind, TextOnMouseEnter)
 	button.TextWrapped = true
 	button.TextScaled = true
 	button.AutoButtonColor = false
-	ToSection(button)
+	SectionService.insert(button)
 	UiCorner(button, 3)
 	local image = NewImage(button, "rbxassetid://71459514973341")
 	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
@@ -617,7 +649,7 @@ function Guis:AddSlideKeybind(Text, functionOn, functionOff, StarterKeybind, Tex
 	local keycodee = Instance.new("TextLabel")
 	keycodee.Parent = image
 	keycodee.Text = Keybind.Name
-	ToSection(button)
+	SectionService.insert(button)
 	keycodee.Size = UDim2.new(0.25, 0, 0.25, 0)
 	keycodee.TextWrapped = true
 	keycodee.TextScaled = true
@@ -714,33 +746,26 @@ function Guis:AddSection(Text, Image)
 	TextLabel.TextWrapped = true
 	TextLabel.RichText = true
 	TextLabel.AutoButtonColor = false
+	local Table = SectionService.new(Text)
 	if Image then
 		local img = NewImage(TextLabel, Image)
 		img.Size = UDim2.new(0.25, 0, 1, 0)
 		img.Position = UDim2.new(1, 0, 0, 0)
 	end
 	UiCorner(TextLabel, 5)
-	SectionRN = Text
-	local Table = {Find = Text, InSection = {}}
-	table.insert(Sections, Table)
 	local e = false
-	local Rot = 0
 	gui.gui:GetAttributeChangedSignal("BackgroundTransparency"):Connect(function()
 		local Value = gui.gui:GetAttribute("BackgroundTransparency")
 		TextLabel.BackgroundTransparency = Value
 	end)
 	TextLabel.MouseButton1Click:Connect(function()
 		ClickSound()
-		for i, v in Table.InSection do
-			if v then
-				v.Visible = not v.Visible
-			end
-		end
+		SectionService.active(Text)
 		e = not e
 		if e == true then
-			clr = 17
+			clr = 13
 		else
-			clr = 21
+			clr = 27
 		end
 		TextLabel.BackgroundColor3 = Color3.fromRGB(clr, clr, clr)
 	end)
@@ -792,7 +817,7 @@ function Guis:AddButtonToSelectPlayer(Text, funcWithPlayerInstance, TextOnMouseE
 	SFv2.Size = UDim2.new(1, 0, 0, 0)
 	SFv2.CanvasSize = UDim2.new(0, 0, 0, 0)
 	SFv2.Visible = false
-	ToSection(button)
+	SectionService.insert(button)
 	SFv2.Position = UDim2.new(1, 0, 0, 0)
 	SFv2.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
 	SFv2.ScrollBarImageTransparency = 1
@@ -900,7 +925,7 @@ function Guis:AddSliderButton(MaxValue, Text, FunctionWithNumber, TextOnMouseEnt
 	button.TextWrapped = true
 	button.TextScaled = true
 	button.AutoButtonColor = false
-	ToSection(button)
+	SectionService.insert(button)
 	local MainSlide = Instance.new("Frame")
 	MainSlide.Parent = button
 	MainSlide.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
@@ -1032,29 +1057,29 @@ function Guis:AddSliderButton(MaxValue, Text, FunctionWithNumber, TextOnMouseEnt
 end
 
 local Styles = {
-	Vikt1 = Color3.fromRGB(255, 38, 38),
-	Vikt2 = Color3.fromRGB(108, 255, 75),
-	Vikt3 = Color3.fromRGB(62, 62, 255),
-	Vikt4 = Color3.fromRGB(255, 232, 60),
-	Vikt5 = Color3.fromRGB(176, 120, 30),
-	Vikt6 = Color3.fromRGB(255, 90, 241),
-	Vikt7 = Color3.fromRGB(62, 252, 255),
-	Vikt8 = Color3.fromRGB(149, 62, 255)
+	Color3.fromRGB(255, 38, 38),
+	Color3.fromRGB(108, 255, 75),
+	Color3.fromRGB(62, 62, 255),
+	Color3.fromRGB(255, 232, 60),
+	Color3.fromRGB(176, 120, 30),
+	Color3.fromRGB(255, 90, 241),
+	Color3.fromRGB(62, 252, 255),
+	Color3.fromRGB(149, 62, 255)
 }
 
 local StylesPosition = {
-	Vikt1 = UDim2.new(0, 0, 0, 0),
-	Vikt2 = UDim2.new(0, 0, -3, 0),
-	Vikt3 = UDim2.new(0, 0, 3, 0),
-	Vikt4 = UDim2.new(-1, 0, 0, 0),
-	Vikt5 = UDim2.new(1, 0, 0, 0),
-	Vikt6 = UDim2.new(1, 0, -3, 0),
-	Vikt7 = UDim2.new(1, 0, 3, 0),
-	Vikt8 = UDim2.new(-1, 0, 3, 0),
-	Vikt9 = UDim2.new(-1, 0, -3, 0),
+	UDim2.new(0, 0, 0, 0),
+	UDim2.new(0, 0, -3, 0),
+	UDim2.new(0, 0, 3, 0),
+	UDim2.new(-1, 0, 0, 0),
+	UDim2.new(1, 0, 0, 0),
+	UDim2.new(1, 0, -3, 0),
+	UDim2.new(1, 0, 3, 0),
+	UDim2.new(-1, 0, 3, 0),
+	UDim2.new(-1, 0, -3, 0),
 }
 
-function Guis:SelectButtons(Text, ScrollingFrameStyle, TextOnMouseEnter, ScrollingFramePositionStyle, ButtonsTable)
+function Guis:SelectButtons(Text: string, ScrollingFrameStyle: number, TextOnMouseEnter: string, ScrollingFramePositionStyle: number, ButtonsTable: {})
 	-- buttons is {{ButtonName, ExclusiveFunction}, {ButtonName, ExclusiveFunction}}
 	local button = Instance.new("TextButton")
 	button.Text = Text
@@ -1071,19 +1096,20 @@ function Guis:SelectButtons(Text, ScrollingFrameStyle, TextOnMouseEnter, Scrolli
 		button.BackgroundTransparency = Value
 	end)
 	local Pos = UDim2.new(1, 0, 0, 0)
-	for i,v in StylesPosition do
-		if i == ScrollingFramePositionStyle then
-			Pos = v
-		end
-	end
 	local SFv2 = Instance.new("ScrollingFrame")
 	SFv2.Parent = gui.Framev1
 	SFv2.Size = UDim2.new(1, 0, 0, 0)
 	SFv2.CanvasSize = UDim2.new(0, 0, 0, 0)
 	SFv2.Visible = false
-	ToSection(button)
+	SectionService.insert(button)
 	SFv2.Position = Pos
 	SFv2.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+	if StylesPosition[ScrollingFramePositionStyle] then
+		button.Position = StylesPosition[ScrollingFramePositionStyle]
+	end
+	if Styles[ScrollingFrameStyle] then
+		button.BackgroundColor3 = Styles[ScrollingFrameStyle]
+	end
 	SFv2.ScrollBarImageTransparency = 1
 	local uigridLayoutv1 = Instance.new("UIGridLayout")
 	uigridLayoutv1.Parent = SFv2
@@ -1140,11 +1166,6 @@ function Guis:SelectButtons(Text, ScrollingFrameStyle, TextOnMouseEnter, Scrolli
 		end)
 	end
 	local Color = Color3.fromRGB(65, 65, 65)
-	for i,v in Styles do
-		if i == ScrollingFrameStyle then
-			Color = v
-		end
-	end
 	-- buttons is {{ButtonName, ExclusiveFunction}, {ButtonName, ExclusiveFunction}}
 	for i,v in ButtonsTable do
 		local ButtonName = v.ButtonName or v[1]
