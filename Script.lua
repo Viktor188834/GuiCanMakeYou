@@ -20,14 +20,14 @@ local Styles = {
 
 local StylesPosition = {
 	UDim2.new(0, 0, 0, 0),
-	UDim2.new(0, 0, -3, 0),
-	UDim2.new(0, 0, 3, 0),
+	UDim2.new(0, 0, -3.5, 0),
+	UDim2.new(0, 0, 3.5, 0),
 	UDim2.new(-1, 0, 0, 0),
 	UDim2.new(1, 0, 0, 0),
-	UDim2.new(1, 0, -3, 0),
-	UDim2.new(1, 0, 3, 0),
-	UDim2.new(-1, 0, 3, 0),
-	UDim2.new(-1, 0, -3, 0),
+	UDim2.new(1, 0, -3.5, 0),
+	UDim2.new(1, 0, 3.5, 0),
+	UDim2.new(-1, 0, 3.5, 0),
+	UDim2.new(-1, 0, -3.5, 0),
 }
 function Guis:WaitForIsA(parent, ClassName, MaxTime)
 	MaxTime = MaxTime or 10
@@ -1033,6 +1033,11 @@ function Guis:AddSection(Text, Image)
 			button.BackgroundTransparency = Value
 		end)
 		local Pos = UDim2.new(1, 0, 0, 0)
+		for i,v in StylesPosition do
+			if i == ScrollingFramePositionStyle then
+				Pos = v
+			end
+		end
 		local SFv2 = Instance.new("ScrollingFrame")
 		SFv2.Parent = gui.Framev1
 		SFv2.Size = UDim2.new(1, 0, 0, 0)
@@ -1116,6 +1121,7 @@ function Guis:AddSection(Text, Image)
 			butt.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 			butt.TextStrokeTransparency = 0
 			butt.MouseButton1Click:Connect(function()
+				ClickSound()
 				SFv2:TweenSize(UDim2.new(1, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.1, false, function()
 					cd = false
 					SFv2.Visible = false
@@ -1194,5 +1200,13 @@ Settings:AddClickButton("reduce gui", function()
 		Guis:Notification({Text = "Done! Size Now: "..tostring(math.floor(gui.Framev1.AbsoluteSize.Y*100)/100)..", "..tostring(math.floor(gui.Framev1.AbsoluteSize.X*100)/100), Duration = 2})
 	end)
 end)
+
+Settings.SelectButtons(nil, "Loadstring", 1, "Loadstring any script", 4, {{"Dex", function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
+end}, {"Infinity Yield", function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+end}, {"Freaky Script Gui", function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/hellohellohell012321/KAWAII-FREAKY-FLING/main/kawaii_freaky_fling.lua",true))()
+end}})
 
 return Guis
