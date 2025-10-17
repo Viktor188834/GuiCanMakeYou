@@ -1136,7 +1136,7 @@ function Guis:AddSection(Text, Image)
 	function Kavo:Text(Text)
 		local Tx = Instance.new("TextLabel")
 		Tx.Parent = gui.ScrollingFrame1
-		Tx.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+		Tx.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 		Tx.TextColor3 = Color3.fromRGB(232, 232, 232)
 		Tx.Text = Text
 		UiCorner(Tx, 5)
